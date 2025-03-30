@@ -77,4 +77,4 @@ class Patient:
             "heart_failure": 0,
             "any_cvd": 0
     }
-        return pd.DataFrame(patient_record)
+        return pd.DataFrame(patient_record, index=[0])
