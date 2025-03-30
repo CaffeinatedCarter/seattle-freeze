@@ -17,14 +17,14 @@ form_placeholder = st.empty()
 
 if not st.session_state.submitted:
     with form_placeholder.form(key="user_form"):
-        input_age = st.number_input("Age in years", min_value=30, max_value=100, step=1, format="%d")
+        input_age = st.slider("Age in years", min_value=30, max_value=100, step=1, format="%d")
         input_sex = st.radio("Sex at birth", options=["Male", "Female"])
         input_smoker = st.radio("Are you a current or former smoker?", options=["Yes", "No"])
         input_hbp = st.radio("Are you currently being treated for high blood pressure?", options=["Yes", "No"])
-        input_tot_chol = st.number_input(label="Total cholesterol level (mg/dL)", min_value=100, max_value=400)
-        input_hdl = st.number_input(label="HDL cholesterol level (mg/dL)", min_value=20, max_value=100, value=60)
+        input_tot_chol = st.slider(label="Total cholesterol level (mg/dL)", min_value=100, max_value=400)
+        input_hdl = st.slider(label="HDL cholesterol level (mg/dL)", min_value=20, max_value=100, value=60)
         st.caption("Also known as 'good' cholesterol")
-        input_bp = st.number_input(label="Systolic blood pressure", min_value=70, max_value=250, value=180)
+        input_bp = st.slider(label="Systolic blood pressure", min_value=70, max_value=250, value=180)
         st.caption("The first and largest number in a blood pressure reading")
         submitted = st.form_submit_button("Submit")
 
