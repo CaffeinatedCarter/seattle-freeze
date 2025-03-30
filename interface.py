@@ -68,7 +68,7 @@ if st.session_state.submitted:
     st.markdown('#')
     st.subheader("Your Results")
     internal_columns = {
-        'index', 'id', 'coronary_heart_disease', 'myocardial_infarction', 'heart_failure'
+        'index', 'id', 'coronary_heart_disease', 'myocardial_infarction', 'heart_failure',
         'stroke', 'peripheral_artery_disease', 'any_cvd'
     }
     column_config={
@@ -82,5 +82,8 @@ if st.session_state.submitted:
         ),
     }
     pt_df_display = pt_df.drop(columns=internal_columns, errors='ignore')
+    pt_df_display["smoker"] = input_smoker
+    pt_df_display["hbp_treatment"] = input_hbp
+    pt_df_display["gender"] = input_sex
     st.dataframe(pt_df_display, hide_index=True, column_config=column_config)
     pt_frs = frs.FraminghamRiskScore(patient=pt, verbose=True)
