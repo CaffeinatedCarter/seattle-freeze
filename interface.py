@@ -116,10 +116,9 @@ if st.session_state.submitted:
     ten_yr_risk, heart_age, risk_level = pt_frs.interpret_score()
 
     a, b = st.columns(2)
-    c, d = st.columns(2)
+    c = st.columns(1)
 
     a.metric("Ten-Year Risk", value=f"{ten_yr_risk}%", border=True)
     b.metric("Heart Age", value=f"{heart_age} years", border=True)
 
     c.metric("Risk Level", f"{risk_level}", border=True)
-    # d.metric()
