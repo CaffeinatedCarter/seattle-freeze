@@ -283,8 +283,8 @@ class FraminghamRiskScore:
         
         return self.score
     
-    def mgdL_to_mmolL(cholesterol_val):
-        return cholesterol_val * 0.0259
+def mgdL_to_mmolL(cholesterol_val):
+    return cholesterol_val * 0.0259
 
 
     
