@@ -65,10 +65,22 @@ if not st.session_state.submitted:
         pt_df = pt.to_df()
 
 if st.session_state.submitted:
+    st.markdown('#')
+    st.subheader("Your Results")
     internal_columns = {
-        'index', 'id', 'coronary_heart_disease', 'myocardial_infarction', 
+        'index', 'id', 'coronary_heart_disease', 'myocardial_infarction', 'heart_failure'
         'stroke', 'peripheral_artery_disease', 'any_cvd'
     }
+    column_config={
+        "hdl": st.column_config.NumberColumn(
+            "HDL",
+            format="%d mmol/L",
+        ),
+        "total_cholesterol": st.column_config.NumberColumn(
+            "Total Cholesterol",
+            format="%d mmol/L",
+        ),
+    }
     pt_df_display = pt_df.drop(columns=internal_columns, errors='ignore')
-    st.dataframe(pt_df_display)
+    st.dataframe(pt_df_display, hide_index=True, column_config=column_config)
     pt_frs = frs.FraminghamRiskScore(patient=pt, verbose=True)
