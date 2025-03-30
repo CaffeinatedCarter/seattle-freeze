@@ -16,10 +16,10 @@ with st.form(key="user_form"):
     input_sex = st.radio("Sex at birth", options=["Male", "Female"])
     input_smoker = st.radio("Are you a current or former smoker?", options=["Yes", "No"])
     input_hbp = st.radio("Are you currently being treated for high blood pressure?", options=["Yes", "No"])
-    input_tot_chol = st.number_input("Total cholesterol level (mg/dL)", "Enter value")
-    input_hdl = st.number_input("HDL cholesterol level (mg/dL)", "Enter value")
+    input_tot_chol = st.number_input(label="Total cholesterol level (mg/dL)", min_value=100, max_value=400, value=150)
+    input_hdl = st.number_input(label="HDL cholesterol level (mg/dL)", min_value=20, max_value=100, value=60)
     st.caption("Also known as 'good' cholesterol")
-    input_bp = st.number_input("Systolic blood pressure", "Enter value")
+    input_bp = st.number_input(label="Systolic blood pressure", min_value=70, max_value=250, value=180)
     st.caption("The first and largest number in a blood pressure reading")
     submitted = st.form_submit_button("Submit")
 
