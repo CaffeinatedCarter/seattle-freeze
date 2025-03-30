@@ -10,6 +10,8 @@ import uuid
 st.title("Framingham Risk Score Calculator")
 st.header("Input your latest test results and get an estimate of your likelihood of a cardiac event within the next 10 years.")
 st.subheader("This is an informal estimate and does not constitute a clinical diagnosis or medical advice. Please consult a physician for more information.")
+if 'submitted' not in st.session_state:
+    st.session_state.submitted = False
 
 with st.form(key="user_form"):
     input_age = st.number_input("Age in years", min_value=30, max_value=100, step=1, format="%d")
@@ -24,7 +26,7 @@ with st.form(key="user_form"):
     submitted = st.form_submit_button("Submit")
 
 if submitted:
-    
+    st.session_state.submitted = True
     non_ints = [input_sex, input_smoker, input_hbp]
     
     if input_tot_chol < 100 or input_tot_chol > 400:
@@ -59,6 +61,7 @@ if submitted:
     
 
     pt_df = pt.to_df()
+if st.session_state.submitted:
     st.write("Form Data Submitted:")
     st.dataframe(pt_df)  # Display the updated DataFrame
     pt_frs = frs.FraminghamRiskScore(patient=pt, verbose=True)
