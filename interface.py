@@ -138,7 +138,7 @@ if st.session_state.submitted:
             heart_string = ">100"
 
     if risk_level == "Intermediate":
-        risk_level == "Medium"
+        risk_level = "Medium"
 
     # # Create the 3-column layout
     col1, col2, col3 = st.columns(3, border=True)
