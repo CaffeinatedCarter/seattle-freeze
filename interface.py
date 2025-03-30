@@ -1,5 +1,5 @@
 from patient import Patient
-import framingham as fr
+import framingham as frs
 
 import streamlit as st
 import pandas as pd
@@ -16,7 +16,7 @@ with st.form(key="user_form"):
     input_sex = st.radio("Sex at birth", options=["Male", "Female"])
     input_smoker = st.radio("Are you a current or former smoker?", options=["Yes", "No"])
     input_hbp = st.radio("Are you currently being treated for high blood pressure?", options=["Yes", "No"])
-    input_tot_chol = st.number_input(label="Total cholesterol level (mg/dL)", min_value=100, max_value=400, value=150)
+    input_tot_chol = st.number_input(label="Total cholesterol level (mg/dL)", min_value=100, max_value=400)
     input_hdl = st.number_input(label="HDL cholesterol level (mg/dL)", min_value=20, max_value=100, value=60)
     st.caption("Also known as 'good' cholesterol")
     input_bp = st.number_input(label="Systolic blood pressure", min_value=70, max_value=250, value=180)
@@ -48,14 +48,17 @@ if submitted:
     pt = Patient(
         gender=input_sex,
         age=input_age,
-        hdl=input_hdl,
-        total_cholesterol=input_tot_chol,
+        hdl=frs.mgdL_to_mmolL(input_hdl),
+        total_cholesterol=frs.mgdL_to_mmolL(input_tot_chol),
         systolic_bp=input_bp,
         hbp_treatment=high_blood_pressure_value,
         smoker=smoker_value,
         pt_id = str(uuid.uuid4())
     )
 
+    
+
     pt_df = pt.to_df()
     st.write("Form Data Submitted:")
     st.dataframe(pt_df)  # Display the updated DataFrame
+    pt_frs = frs.FraminghamRiskScore(patient=pt, verbose=True)
