@@ -65,6 +65,15 @@ if not st.session_state.submitted:
         pt_df = pt.to_df()
 
 if st.session_state.submitted:
+    column_config = {
+        'index': st.column_config.Hidden(),
+        'id': st.column_config.Hidden(),
+        'coronary_heart_disease': st.column_config.Hidden(),
+        'myocardial_infarction': st.column_config.Hidden(),
+        'stroke': st.column_config.Hidden(),
+        'peripheral_artery_disease': st.column_config.Hidden(),
+        'any_cvd': st.column_config.Hidden(),
+    }
     st.write("Form Data Submitted:")
-    st.dataframe(pt_df)  # Display the updated DataFrame
+    st.dataframe(pt_df, column_config=column_config)  # Display the updated DataFrame
     pt_frs = frs.FraminghamRiskScore(patient=pt, verbose=True)
