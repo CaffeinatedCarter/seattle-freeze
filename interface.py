@@ -80,6 +80,23 @@ if st.session_state.submitted:
             "Total Cholesterol",
             format="%f mmol/L",
         ),
+        "gender": st.column_config.TextColumn(
+            "Sex",
+        ),
+        "age": st.column_config.NumberColumn(
+            "Age",
+            format="%d yrs"
+        ),
+        "systolic_bp": st.column_config.TextColumn(
+            "Systolic BP",
+        ),
+        "smoker": st.column_config.TextColumn(
+            "Smoking Status",
+        ),
+        "hbp_treatment": st.column_config.TextColumn(
+            "High BP Treatment",
+        ),
+
     }
     pt_df_display = pt_df.drop(columns=internal_columns, errors='ignore')
     pt_df_display["smoker"] = input_smoker
