@@ -62,9 +62,7 @@ if not st.session_state.submitted:
             pt_id = str(uuid.uuid4())
         )
 
-        
-
-    pt_df = pt.to_df()
+        pt_df = pt.to_df()
 
 if st.session_state.submitted:
     st.write("Form Data Submitted:")
