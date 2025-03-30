@@ -13,7 +13,7 @@ st.subheader("This is an informal estimate and does not constitute a clinical di
 if 'submitted' not in st.session_state:
     st.session_state.submitted = False
 
-if not st.session_state.submitted:
+with st.expander("Fill out the form", expanded=not st.session_state.submitted):
     with st.form(key="user_form"):
         input_age = st.number_input("Age in years", min_value=30, max_value=100, step=1, format="%d")
         input_sex = st.radio("Sex at birth", options=["Male", "Female"])
