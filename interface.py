@@ -61,8 +61,8 @@ if not st.session_state.submitted:
 
         
 
-        pt_df = pt.to_df()
-        
+    pt_df = pt.to_df()
+
 if st.session_state.submitted:
     st.write("Form Data Submitted:")
     st.dataframe(pt_df)  # Display the updated DataFrame
