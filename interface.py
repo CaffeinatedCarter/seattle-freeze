@@ -135,7 +135,7 @@ if st.session_state.submitted:
             heart_string = ">100"
 
     # # Create the 3-column layout
-    col1, col2, col3 = st.columns(3)
+    col1, col2, col3 = st.columns(3, border=True)
 
     # col1.markdown(f'''
     #     Heart Age:
@@ -151,13 +151,16 @@ if st.session_state.submitted:
     # ''')
 
     with col1:
-        st.subheader('### Ten-Year Risk')
-        st.markdown(f"<span style='font-size: 40px; color: {risk_color};'>{ten_yr_risk}%</span>", unsafe_allow_html=True)
+        st.markdown('#### Heart Age')
+        st.markdown(f"<span style='font-size: 40px; color: {heart_color};'>{heart_string} years</span>",
+                    unsafe_allow_html=True)
 
     with col2:
-        st.subheader('### Heart Age')
-        st.markdown(f"<span style='font-size: 40px; color: {heart_color};'>{heart_string} years</span>", unsafe_allow_html=True)
+        st.markdown('#### Ten-Year Risk')
+        st.markdown(f"<span style='font-size: 40px; color: {risk_color};'>{ten_yr_risk}%</span>",
+                    unsafe_allow_html=True)
 
     with col3:
-        st.markdown('### Risk Level')
-        st.markdown(f"<span style='font-size: 40px; color: {risk_color};'>{risk_level.capitalize()}</span>", unsafe_allow_html=True)
+        st.markdown('#### Risk Level')
+        st.markdown(f"<span style='font-size: 40px; color: {risk_color};'>{risk_level.capitalize()}</span>",
+                    unsafe_allow_html=True)
