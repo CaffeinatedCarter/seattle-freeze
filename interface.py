@@ -109,9 +109,9 @@ if st.session_state.submitted:
 
     ## USER-FACING OUTPUT
     st.markdown('###')
-    st.subheader("Your Submission")
-    st.dataframe(pt_df_display, hide_index=True, column_config=column_config)
-    st.markdown('#####')
+    # st.subheader("Your Submission")
+    # st.dataframe(pt_df_display, hide_index=True, column_config=column_config)
+    # st.markdown('#####')
     st.subheader('Your Results')
 
     pt_frs = frs.FraminghamRiskScore(patient=pt)
