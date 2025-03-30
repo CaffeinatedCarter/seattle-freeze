@@ -65,8 +65,8 @@ if not st.session_state.submitted:
         pt_df = pt.to_df()
 
 if st.session_state.submitted:
-    st.markdown('###')
-    st.subheader("Your Submission")
+    
+    ##  DATA MANIPULATION & FORMATTING
     internal_columns = {
         'index', 'id', 'coronary_heart_disease', 'myocardial_infarction', 'heart_failure',
         'stroke', 'peripheral_artery_disease', 'any_cvd'
@@ -102,7 +102,24 @@ if st.session_state.submitted:
     pt_df_display["smoker"] = input_smoker
     pt_df_display["hbp_treatment"] = input_hbp
     pt_df_display["gender"] = input_sex
-    st.dataframe(pt_df_display, hide_index=True, column_config=column_config)
+    
+
+    ## USER-FACING OUTPUT
     st.markdown('###')
+    st.subheader("Your Submission")
+    st.dataframe(pt_df_display, hide_index=True, column_config=column_config)
+    st.markdown('#####')
     st.subheader('Your Results')
-    pt_frs = frs.FraminghamRiskScore(patient=pt, verbose=True)
+
+    pt_frs = frs.FraminghamRiskScore(patient=pt)
+    pt_frs.calc_frs()
+    ten_yr_risk, heart_age, risk_level = pt_frs.interpret_score()
+
+    a, b = st.columns(2)
+    c, d = st.columns(2)
+
+    a.metric("Ten-Year Risk", value=f"{ten_yr_risk}%", border=True)
+    b.metric("Heart Age", value=f"{heart_age} years", border=True)
+
+    c.metric("Risk Level", f"{risk_level}", border=True)
+    d.metric()
