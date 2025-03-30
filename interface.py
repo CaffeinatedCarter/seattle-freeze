@@ -13,8 +13,10 @@ st.subheader("This is an informal estimate and does not constitute a clinical di
 if 'submitted' not in st.session_state:
     st.session_state.submitted = False
 
-with st.expander("Fill out the form", expanded=not st.session_state.submitted):
-    with st.form(key="user_form"):
+form_placeholder = st.empty() 
+
+if not st.session_state.submitted:
+    with form_placeholder.form(key="user_form"):
         input_age = st.number_input("Age in years", min_value=30, max_value=100, step=1, format="%d")
         input_sex = st.radio("Sex at birth", options=["Male", "Female"])
         input_smoker = st.radio("Are you a current or former smoker?", options=["Yes", "No"])
@@ -28,6 +30,7 @@ with st.expander("Fill out the form", expanded=not st.session_state.submitted):
 
     if submitted:
         st.session_state.submitted = True
+        form_placeholder.empty()
         non_ints = [input_sex, input_smoker, input_hbp]
         
         if input_tot_chol < 100 or input_tot_chol > 400:
