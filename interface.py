@@ -8,8 +8,8 @@ import uuid
 # df = pd.DataFrame(columns=["Age", "Sex_at_birth", "Smoker", "High_blood_pressure", "Total_cholesterol", "HDL_cholesterol", "Systolic_blood_pressure"])
 
 st.title("Framingham Risk Score Calculator")
-st.header("Input your latest test results and get an estimate of your likelihood of a cardiac event within the next 10 years.")
-st.subheader("This is an informal estimate and does not constitute a clinical diagnosis or medical advice. Please consult a physician for more information.")
+st.subheader("Input your latest test results and get an estimate of your likelihood of a cardiac event within the next 10 years.")
+st.text("This is an informal estimate and does not constitute a clinical diagnosis or medical advice. Please consult a physician for more information.")
 if 'submitted' not in st.session_state:
     st.session_state.submitted = False
 
