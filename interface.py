@@ -64,14 +64,19 @@ if not st.session_state.submitted:
         )
 
         pt_df = pt.to_df()
+        internal_columns = {
+            'index', 'id', 'coronary_heart_disease', 'myocardial_infarction', 'heart_failure',
+            'stroke', 'peripheral_artery_disease', 'any_cvd'
+        }
+        pt_df_display = pt_df.drop(columns=internal_columns, errors='ignore')
+        pt_df_display["smoking_status"] = input_smoker
+        pt_df_display["hbp_treatment"] = input_hbp
+        pt_df_display["gender"] = input_sex
 
 if st.session_state.submitted:
     
     ##  DATA MANIPULATION & FORMATTING
-    internal_columns = {
-        'index', 'id', 'coronary_heart_disease', 'myocardial_infarction', 'heart_failure',
-        'stroke', 'peripheral_artery_disease', 'any_cvd'
-    }
+    
     column_config={
         "hdl": st.column_config.NumberColumn(
             "HDL",
@@ -99,10 +104,7 @@ if st.session_state.submitted:
         ),
 
     }
-    pt_df_display = pt_df.drop(columns=internal_columns, errors='ignore')
-    pt_df_display["smoking_status"] = input_smoker
-    pt_df_display["hbp_treatment"] = input_hbp
-    pt_df_display["gender"] = input_sex
+
     
 
     ## USER-FACING OUTPUT
