@@ -77,7 +77,7 @@ if st.session_state.submitted:
             format="%f mmol/L",
         ),
         "total_cholesterol": st.column_config.NumberColumn(
-            "Total Cholesterol",
+            "Total Chol.",
             format="%f mmol/L",
         ),
         "gender": st.column_config.TextColumn(
@@ -90,11 +90,11 @@ if st.session_state.submitted:
         "systolic_bp": st.column_config.TextColumn(
             "Systolic BP",
         ),
-        "smoker": st.column_config.TextColumn(
-            "Smoking Status",
+        "smoking_status": st.column_config.TextColumn(
+            "Smoker?",
         ),
         "hbp_treatment": st.column_config.TextColumn(
-            "High BP Treatment",
+            "HBP Treatment",
         ),
 
     }
