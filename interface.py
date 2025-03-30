@@ -30,7 +30,8 @@ if not st.session_state.submitted:
 
     if submitted:
         st.session_state.submitted = True
-        form_placeholder.empty()
+        # Uncomment if you want the form to disappear.
+        # form_placeholder.empty()
         non_ints = [input_sex, input_smoker, input_hbp]
         
         if input_tot_chol < 100 or input_tot_chol > 400:
@@ -99,7 +100,7 @@ if st.session_state.submitted:
 
     }
     pt_df_display = pt_df.drop(columns=internal_columns, errors='ignore')
-    pt_df_display["smoker"] = input_smoker
+    pt_df_display["smoking_status"] = input_smoker
     pt_df_display["hbp_treatment"] = input_hbp
     pt_df_display["gender"] = input_sex
     
@@ -107,7 +108,7 @@ if st.session_state.submitted:
     ## USER-FACING OUTPUT
     st.markdown('###')
     st.subheader("Your Submission")
-    st.data_editor(pt_df_display, hide_index=True, column_config=column_config)
+    st.dataframe(pt_df_display, hide_index=True, column_config=column_config)
     st.markdown('#####')
     st.subheader('Your Results')
 
