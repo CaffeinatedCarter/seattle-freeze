@@ -53,7 +53,7 @@ if submitted:
         systolic_bp=input_bp,
         hbp_treatment=high_blood_pressure_value,
         smoker=smoker_value,
-        pt_id = random.randint()
+        pt_id = str(random.randint())
     )
 
     pt_df = pt.to_df()
