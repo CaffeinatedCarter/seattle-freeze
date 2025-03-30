@@ -137,6 +137,9 @@ if st.session_state.submitted:
         if heart_age == 100:
             heart_string = ">100"
 
+    if risk_level == "Intermediate":
+        risk_level == "Medium"
+
     # # Create the 3-column layout
     col1, col2, col3 = st.columns(3, border=True)
 
@@ -155,17 +158,17 @@ if st.session_state.submitted:
 
     with col1:
         st.markdown('#### Heart Age')
-        st.markdown(f"<span style='font-size: 40px; color: {heart_color};'>{heart_string} years</span>",
+        st.markdown(f"<span style='font-size: 36px; color: {heart_color};'>{heart_string} years</span>",
                     unsafe_allow_html=True)
 
     with col2:
         st.markdown('#### Ten-Year Risk')
-        st.markdown(f"<span style='font-size: 40px; color: {risk_color};'>{ten_yr_risk}%</span>",
+        st.markdown(f"<span style='font-size: 36px; color: {risk_color};'>{ten_yr_risk}%</span>",
                     unsafe_allow_html=True)
 
     with col3:
         st.markdown('#### Risk Level')
-        st.markdown(f"<span style='font-size: 2vw; color: {risk_color};'>{risk_level.capitalize()}</span>",
+        st.markdown(f"<span style='font-size: 36px; color: {risk_color};'>{risk_level.capitalize()}</span>",
                     unsafe_allow_html=True)
         
     st.session_state.submitted = False
