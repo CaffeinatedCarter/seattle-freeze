@@ -144,10 +144,3 @@ if st.session_state.submitted:
         Risk Level:
         :{risk_color}### {risk_level}
     ''')
-
-    # a, b, c = st.columns(3)
-
-    # a.metric("Ten-Year Risk", value=f"{ten_yr_risk}%", border=True)
-    # b.metric("Heart Age", value=f"{heart_age} years", border=True)
-
-    # c.metric("Risk Level", f"{risk_level}", border=True)
