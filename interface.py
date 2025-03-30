@@ -65,8 +65,7 @@ if not st.session_state.submitted:
         pt_df = pt.to_df()
 
 if st.session_state.submitted:
-    st.markdown('#')
-    st.subheader("Your Results")
+    st.subheader("Your Submission")
     internal_columns = {
         'index', 'id', 'coronary_heart_disease', 'myocardial_infarction', 'heart_failure',
         'stroke', 'peripheral_artery_disease', 'any_cvd'
@@ -103,4 +102,4 @@ if st.session_state.submitted:
     pt_df_display["hbp_treatment"] = input_hbp
     pt_df_display["gender"] = input_sex
     st.dataframe(pt_df_display, hide_index=True, column_config=column_config)
-    pt_frs = frs.FraminghamRiskScore(patient=pt, verbose=True)
+    
