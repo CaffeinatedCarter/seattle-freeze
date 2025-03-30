@@ -74,11 +74,11 @@ if st.session_state.submitted:
     column_config={
         "hdl": st.column_config.NumberColumn(
             "HDL",
-            format="%d mmol/L",
+            format="%f mmol/L",
         ),
         "total_cholesterol": st.column_config.NumberColumn(
             "Total Cholesterol",
-            format="%d mmol/L",
+            format="%f mmol/L",
         ),
     }
     pt_df_display = pt_df.drop(columns=internal_columns, errors='ignore')
