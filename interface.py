@@ -122,9 +122,9 @@ if st.session_state.submitted:
     else:
         risk_color = 'red'
 
-    if heart_age < pt_df["age"]:
+    if heart_age < input_age:
         heart_color = 'green'
-    elif pt_df["age"] <= heart_age <= pt_df["age"] + 5:
+    elif input_age <= heart_age <= input_age + 5:
         heart_color = 'yellow'
     else:
         heart_color = 'red'
