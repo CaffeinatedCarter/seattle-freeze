@@ -122,12 +122,17 @@ if st.session_state.submitted:
     else:
         risk_color = 'red'
 
+    heart_string = str(heart_age)
     if heart_age < input_age:
         heart_color = 'green'
+        if heart_age == 0:
+            heart_string = "<30"
     elif input_age <= heart_age <= input_age + 5:
         heart_color = 'yellow'
     else:
         heart_color = 'red'
+        if heart_age == 100:
+            heart_string = ">100"
 
     # # Create the 3-column layout
     col1, col2, col3 = st.columns(3)
@@ -146,13 +151,13 @@ if st.session_state.submitted:
     # ''')
 
     with col1:
-        st.subheader('Ten-Year Risk')
+        st.subheader('### Ten-Year Risk')
         st.markdown(f"<span style='font-size: 40px; color: {risk_color};'>{ten_yr_risk}%</span>", unsafe_allow_html=True)
 
     with col2:
-        st.subheader('Heart Age')
-        st.markdown(f"<span style='font-size: 40px; color: {heart_color};'>{heart_age} years</span>", unsafe_allow_html=True)
+        st.subheader('### Heart Age')
+        st.markdown(f"<span style='font-size: 40px; color: {heart_color};'>{heart_string} years</span>", unsafe_allow_html=True)
 
     with col3:
-        st.subheader('Risk Level')
+        st.markdown('### Risk Level')
         st.markdown(f"<span style='font-size: 40px; color: {risk_color};'>{risk_level.capitalize()}</span>", unsafe_allow_html=True)
