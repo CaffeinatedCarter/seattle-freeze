@@ -129,18 +129,30 @@ if st.session_state.submitted:
     else:
         heart_color = 'red'
 
-    # Create the 3-column layout
+    # # Create the 3-column layout
     col1, col2, col3 = st.columns(3)
 
-    col1.markdown(f'''
-        Heart Age:
-        :{heart_color}### {heart_age} years
-    ''')
-    col2.markdown(f'''
-        Ten Year Risk:
-        :{risk_color}### {ten_yr_risk}%
-    ''')
-    col3.markdown(f'''
-        Risk Level:
-        :{risk_color}### {risk_level}
-    ''')
+    # col1.markdown(f'''
+    #     Heart Age:
+    #     :{heart_color}### {heart_age} years
+    # ''')
+    # col2.markdown(f'''
+    #     Ten Year Risk:
+    #     :{risk_color}### {ten_yr_risk}%
+    # ''')
+    # col3.markdown(f'''
+    #     Risk Level:
+    #     :{risk_color}### {risk_level}
+    # ''')
+
+    with col1:
+        st.subheader('Ten-Year Risk')
+        st.markdown(f"<span style='font-size: 40px; color: {risk_color};'>{ten_yr_risk}%</span>", unsafe_allow_html=True)
+
+    with col2:
+        st.subheader('Heart Age')
+        st.markdown(f"<span style='font-size: 40px; color: {heart_color};'>{heart_age} years</span>", unsafe_allow_html=True)
+
+    with col3:
+        st.subheader('Risk Level')
+        st.markdown(f"<span style='font-size: 40px; color: {risk_color};'>{risk_level.capitalize()}</span>", unsafe_allow_html=True)
