@@ -46,7 +46,7 @@ if submitted:
     gender_value = 1 if input_sex == "Male" else 0
     
     pt = Patient(
-        gender=gender_value,
+        gender=input_sex,
         age=input_age,
         hdl=input_hdl,
         total_cholesterol=input_tot_chol,
