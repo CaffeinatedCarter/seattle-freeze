@@ -115,9 +115,39 @@ if st.session_state.submitted:
     pt_frs.calc_frs()
     ten_yr_risk, heart_age, risk_level = pt_frs.interpret_score()
 
-    a, b, c = st.columns(3)
+    if ten_yr_risk < 10:
+        risk_color = 'green'
+    elif ten_yr_risk < 20:
+        risk_color = 'yellow'
+    else:
+        risk_color = 'red'
 
-    a.metric("Ten-Year Risk", value=f"{ten_yr_risk}%", border=True)
-    b.metric("Heart Age", value=f"{heart_age} years", border=True)
+    if heart_age < pt_df["age"]:
+        heart_color = 'green'
+    elif pt_df["age"] <= heart_age <= pt_df["age"] + 5:
+        heart_color = 'yellow'
+    else:
+        heart_color = 'red'
 
-    c.metric("Risk Level", f"{risk_level}", border=True)
+    # Create the 3-column layout
+    col1, col2, col3 = st.columns(3)
+
+    col1.markdown(f'''
+        Heart Age:
+        :{heart_color}### {heart_age} years
+    ''')
+    col2.markdown(f'''
+        Ten Year Risk:
+        :{risk_color}### {ten_yr_risk}%
+    ''')
+    col3.markdown(f'''
+        Risk Level:
+        :{risk_color}### {risk_level}
+    ''')
+
+    # a, b, c = st.columns(3)
+
+    # a.metric("Ten-Year Risk", value=f"{ten_yr_risk}%", border=True)
+    # b.metric("Heart Age", value=f"{heart_age} years", border=True)
+
+    # c.metric("Risk Level", f"{risk_level}", border=True)
