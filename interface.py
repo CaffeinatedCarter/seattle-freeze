@@ -3,7 +3,7 @@ import framingham as fr
 
 import streamlit as st
 import pandas as pd
-import random
+import uuid
 
 # df = pd.DataFrame(columns=["Age", "Sex_at_birth", "Smoker", "High_blood_pressure", "Total_cholesterol", "HDL_cholesterol", "Systolic_blood_pressure"])
 
@@ -53,7 +53,7 @@ if submitted:
         systolic_bp=input_bp,
         hbp_treatment=high_blood_pressure_value,
         smoker=smoker_value,
-        pt_id = str(random.randint())
+        pt_id = str(uuid.uuid4())
     )
 
     pt_df = pt.to_df()
