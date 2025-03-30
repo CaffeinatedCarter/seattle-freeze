@@ -167,3 +167,5 @@ if st.session_state.submitted:
         st.markdown('#### Risk Level')
         st.markdown(f"<span style='font-size: 40px; color: {risk_color};'>{risk_level.capitalize()}</span>",
                     unsafe_allow_html=True)
+        
+    st.session_state.submitted = False
