@@ -122,4 +122,4 @@ if st.session_state.submitted:
     b.metric("Heart Age", value=f"{heart_age} years", border=True)
 
     c.metric("Risk Level", f"{risk_level}", border=True)
-    d.metric()
+    # d.metric()
