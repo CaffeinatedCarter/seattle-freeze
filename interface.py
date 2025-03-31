@@ -135,10 +135,15 @@ if st.session_state.submitted:
     else:
         heart_color = 'red'
         if heart_age == 100:
-            heart_string = ">100"
+            heart_string = ">80"
 
-    if risk_level == "Intermediate":
-        risk_level = "Medium"
+    riskpercent_string = str(ten_yr_risk)
+
+    if ten_yr_risk == 0.0:
+        riskpercent_string = "<1"
+    if ten_yr_risk == 100.0:
+        riskpercent_string = ">30"
+
 
     # # Create the 3-column layout
     col1, col2, col3 = st.columns(3, border=True)

@@ -241,7 +241,7 @@ class FraminghamRiskScore:
         if self.ten_yr_risk_percent < 10.0:
             self.risk_level = "Low"
         elif 10.0 <= self.ten_yr_risk_percent < 20.0:
-            self.risk_level = "Intermediate"
+            self.risk_level = "Medium"
         else: 
             self.risk_level = "High"
         
