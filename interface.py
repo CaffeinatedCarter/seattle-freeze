@@ -119,21 +119,21 @@ if st.session_state.submitted:
     ten_yr_risk, heart_age, risk_level = pt_frs.interpret_score()
 
     if ten_yr_risk < 10:
-        risk_color = 'DarkGreen'
+        risk_color = '008000'
     elif ten_yr_risk < 20:
-        risk_color = 'DarkOrange'
+        risk_color = 'FF8C00'
     else:
-        risk_color = 'FireBrick'
+        risk_color = 'B22222'
 
     heart_string = str(heart_age)
     if heart_age < input_age:
-        heart_color = 'DarkGreen'
+        heart_color = '008000'
         if heart_age == 0:
             heart_string = "<30"
     elif input_age <= heart_age <= input_age + 5:
-        heart_color = 'DarkOrange'
+        heart_color = 'FF8C00'
     else:
-        heart_color = 'FireBrick'
+        heart_color = 'B22222'
         if heart_age == 100:
             heart_string = ">80"
 
@@ -163,17 +163,17 @@ if st.session_state.submitted:
 
     with col1:
         st.markdown('#### Heart Age')
-        st.markdown(f"<span style='font-size: 36px; color: {heart_color};'>{heart_string} years</span>",
+        st.markdown(f"<span style='font-size: 36px; color: #{heart_color};'>{heart_string} years</span>",
                     unsafe_allow_html=True)
 
     with col2:
         st.markdown('#### Ten-Year Risk')
-        st.markdown(f"<span style='font-size: 36px; color: {risk_color};'>{ten_yr_risk}%</span>",
+        st.markdown(f"<span style='font-size: 36px; color: #{risk_color};'>{ten_yr_risk}%</span>",
                     unsafe_allow_html=True)
 
     with col3:
         st.markdown('#### Risk Level')
-        st.markdown(f"<span style='font-size: 36px; color: {risk_color};'>{risk_level.capitalize()}</span>",
+        st.markdown(f"<span style='font-size: 36px; color: #{risk_color};'>{risk_level.capitalize()}</span>",
                     unsafe_allow_html=True)
         
     st.session_state.submitted = False
