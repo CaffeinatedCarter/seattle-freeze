@@ -168,7 +168,7 @@ if st.session_state.submitted:
 
     with col2:
         st.markdown('#### Ten-Year Risk')
-        st.markdown(f"<span style='font-size: 36px; color: #{risk_color};'>{ten_yr_risk}%</span>",
+        st.markdown(f"<span style='font-size: 36px; color: #{risk_color};'>{riskpercent_string}%</span>",
                     unsafe_allow_html=True)
 
     with col3:
