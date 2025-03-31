@@ -119,21 +119,21 @@ if st.session_state.submitted:
     ten_yr_risk, heart_age, risk_level = pt_frs.interpret_score()
 
     if ten_yr_risk < 10:
-        risk_color = 'green'
+        risk_color = 'DarkGreen'
     elif ten_yr_risk < 20:
-        risk_color = 'yellow'
+        risk_color = 'DarkOrange'
     else:
-        risk_color = 'red'
+        risk_color = 'FireBrick'
 
     heart_string = str(heart_age)
     if heart_age < input_age:
-        heart_color = 'green'
+        heart_color = 'DarkGreen'
         if heart_age == 0:
             heart_string = "<30"
     elif input_age <= heart_age <= input_age + 5:
-        heart_color = 'yellow'
+        heart_color = 'DarkOrange'
     else:
-        heart_color = 'red'
+        heart_color = 'FireBrick'
         if heart_age == 100:
             heart_string = ">80"
 
