@@ -126,16 +126,20 @@ if st.session_state.submitted:
         risk_color = 'B22222'
 
     heart_string = str(heart_age)
+
+    if heart_age == 0:
+        heart_string = "<30"
+    elif heart_age == 100:
+        heart_string = ">80"
+    else:
+        heart_string = str(heart_age)
+
     if heart_age < input_age:
         heart_color = '008000'
-        if heart_age == 0:
-            heart_string = "<30"
     elif input_age <= heart_age <= input_age + 5:
         heart_color = 'FF8C00'
     else:
         heart_color = 'B22222'
-        if heart_age == 100:
-            heart_string = ">80"
 
 
     if ten_yr_risk == 0.0:
