@@ -1,3 +1,5 @@
+from scipy.cluster.hierarchy import single
+
 from patient import Patient
 from prediction_model_api_call import predict_single_entry
 import framingham as frs
@@ -19,17 +21,15 @@ form_placeholder = st.empty()
 if not st.session_state.submitted:
 
     with form_placeholder.form(key="user_form"):
-        c1, c2, c3 = st.columns(2)
 
-        with c1:
-            st.markdown("Framingham Risk Score")
-
-        with c2:
-            model_toggle = st.toggle("Use Learning Model", value=True)
-
-
-
-
+        option_map = {
+            0: "Learning Model",
+            1: "Framingham Risk Score"
+        }
+        model_toggle = st.segmented_control(
+            options = option_map.keys(),
+            selection_mode="single"
+        )
         input_age = st.slider("Age in years", min_value=30, max_value=100, value=65, step=1, format="%d")
         input_sex = st.selectbox("Sex at birth", options=["Male", "Female"])
         input_smoker = st.radio("Are you a current or former smoker?", options=["No", "Yes"])
@@ -65,7 +65,7 @@ if not st.session_state.submitted:
         high_blood_pressure_value = True if input_hbp == "Yes" else False
         gender_value = 1 if input_sex == "Male" else 0
 
-        if model_toggle:
+        if not model_toggle:
             prediction = predict_single_entry(gender=gender_value, age=input_age,
                             smoking_status=smoker_value, hdl=input_hdl,
                             total_cholesterol=input_tot_chol, systolic_bp=input_bp)
@@ -133,7 +133,7 @@ if st.session_state.submitted:
     # st.markdown('#####')
     st.subheader('Your Results')
 
-    if model_toggle:
+    if not model_toggle:
         if prediction:
             risk_color = 'B22222'
             risk_level = "High"
