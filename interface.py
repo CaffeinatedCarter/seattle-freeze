@@ -19,15 +19,6 @@ form_placeholder = st.empty()
 if not st.session_state.submitted:
 
     with form_placeholder.form(key="user_form"):
-
-        option_map = {
-            "Learning Model" : 0,
-            "Framingham Risk Score" : 1
-        }
-        model_toggle = st.segmented_control(label="Model Selection",
-            options = option_map.keys(),
-            selection_mode="single"
-        )
         input_age = st.slider("Age in years", min_value=30, max_value=100, value=65, step=1, format="%d")
         input_sex = st.selectbox("Sex at birth", options=["Male", "Female"])
         input_smoker = st.radio("Are you a current or former smoker?", options=["No", "Yes"])
@@ -37,6 +28,14 @@ if not st.session_state.submitted:
         st.caption("Also known as 'good' cholesterol")
         input_bp = st.slider(label="Systolic blood pressure", min_value=70, max_value=250, value=160)
         st.caption("The first and largest number in a blood pressure reading")
+        option_map = {
+            "Learning Model" : 0,
+            "Framingham Risk Score" : 1
+        }
+        model_toggle = st.segmented_control(label="Model Selection",
+            options = option_map.keys(),
+            selection_mode="single"
+        )
         submitted = st.form_submit_button("Submit")
 
     if submitted:
