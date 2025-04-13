@@ -1,5 +1,3 @@
-from scipy.cluster.hierarchy import single
-
 from patient import Patient
 from prediction_model_api_call import predict_single_entry
 import framingham as frs
