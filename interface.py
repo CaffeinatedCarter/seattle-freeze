@@ -57,7 +57,7 @@ if not st.session_state.submitted:
         gender_value = 1 if input_sex == "Male" else 0
 
         if model_toggle:
-            predict_single_entry(gender=gender_value, age=input_age,
+            prediction = predict_single_entry(gender=gender_value, age=input_age,
                             smoking_status=smoker_value, hdl=input_hdl,
                             total_cholesterol=input_tot_chol, systolic_bp=input_bp)
 
@@ -124,72 +124,83 @@ if st.session_state.submitted:
     # st.markdown('#####')
     st.subheader('Your Results')
 
-    pt_frs = frs.FraminghamRiskScore(patient=pt)
-    pt_frs.calc_frs()
-    ten_yr_risk, heart_age, risk_level = pt_frs.interpret_score()
-
-    if ten_yr_risk < 10:
-        risk_color = '008000'
-    elif ten_yr_risk < 20:
-        risk_color = 'FF8C00'
-    else:
-        risk_color = 'B22222'
-
-    heart_string = str(heart_age)
-
-    if heart_age == 0:
-        heart_string = "<30"
-        heart_color = '008000'
-    elif heart_age == 100:
-        heart_string = ">80"
-        heart_color = 'B22222'
-    else:
-        heart_string = str(heart_age)
-        if heart_age < input_age:
-            heart_color = '008000'
-        elif input_age <= heart_age <= input_age + 5:
-            heart_color = 'FF8C00'
+    if model_toggle:
+        if prediction:
+            risk_color = 'B22222'
+            risk_level = "High"
         else:
-            heart_color = 'B22222'
-
-
-    if ten_yr_risk == 0.0:
-        riskpercent_string = "<1"
-    elif ten_yr_risk == 100.0:
-        riskpercent_string = ">30"
-    else:
-        riskpercent_string = str(ten_yr_risk)
-
-
-    # # Create the 3-column layout
-    col1, col2, col3 = st.columns(3, border=True)
-
-    # col1.markdown(f'''
-    #     Heart Age:
-    #     :{heart_color}### {heart_age} years
-    # ''')
-    # col2.markdown(f'''
-    #     Ten Year Risk:
-    #     :{risk_color}### {ten_yr_risk}%
-    # ''')
-    # col3.markdown(f'''
-    #     Risk Level:
-    #     :{risk_color}### {risk_level}
-    # ''')
-
-    with col1:
-        st.markdown('#### Heart Age')
-        st.markdown(f"<span style='font-size: 36px; color: #{heart_color};'>{heart_string} years</span>",
-                    unsafe_allow_html=True)
-
-    with col2:
-        st.markdown('#### Ten-Year Risk')
-        st.markdown(f"<span style='font-size: 36px; color: #{risk_color};'>{riskpercent_string}%</span>",
-                    unsafe_allow_html=True)
-
-    with col3:
+            risk_color = "22b2b2"
         st.markdown('#### Risk Level')
         st.markdown(f"<span style='font-size: 36px; color: #{risk_color};'>{risk_level.capitalize()}</span>",
                     unsafe_allow_html=True)
-        
+
+    else:
+        pt_frs = frs.FraminghamRiskScore(patient=pt)
+        pt_frs.calc_frs()
+        ten_yr_risk, heart_age, risk_level = pt_frs.interpret_score()
+
+        if ten_yr_risk < 10:
+            risk_color = '008000'
+        elif ten_yr_risk < 20:
+            risk_color = 'FF8C00'
+        else:
+            risk_color = 'B22222'
+
+        heart_string = str(heart_age)
+
+        if heart_age == 0:
+            heart_string = "<30"
+            heart_color = '008000'
+        elif heart_age == 100:
+            heart_string = ">80"
+            heart_color = 'B22222'
+        else:
+            heart_string = str(heart_age)
+            if heart_age < input_age:
+                heart_color = '008000'
+            elif input_age <= heart_age <= input_age + 5:
+                heart_color = 'FF8C00'
+            else:
+                heart_color = 'B22222'
+
+
+        if ten_yr_risk == 0.0:
+            riskpercent_string = "<1"
+        elif ten_yr_risk == 100.0:
+            riskpercent_string = ">30"
+        else:
+            riskpercent_string = str(ten_yr_risk)
+
+
+        # # Create the 3-column layout
+        col1, col2, col3 = st.columns(3, border=True)
+
+        # col1.markdown(f'''
+        #     Heart Age:
+        #     :{heart_color}### {heart_age} years
+        # ''')
+        # col2.markdown(f'''
+        #     Ten Year Risk:
+        #     :{risk_color}### {ten_yr_risk}%
+        # ''')
+        # col3.markdown(f'''
+        #     Risk Level:
+        #     :{risk_color}### {risk_level}
+        # ''')
+
+        with col1:
+            st.markdown('#### Heart Age')
+            st.markdown(f"<span style='font-size: 36px; color: #{heart_color};'>{heart_string} years</span>",
+                        unsafe_allow_html=True)
+
+        with col2:
+            st.markdown('#### Ten-Year Risk')
+            st.markdown(f"<span style='font-size: 36px; color: #{risk_color};'>{riskpercent_string}%</span>",
+                        unsafe_allow_html=True)
+
+        with col3:
+            st.markdown('#### Risk Level')
+            st.markdown(f"<span style='font-size: 36px; color: #{risk_color};'>{risk_level.capitalize()}</span>",
+                        unsafe_allow_html=True)
+
     st.session_state.submitted = False
