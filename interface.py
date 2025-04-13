@@ -140,7 +140,7 @@ if st.session_state.submitted:
         else:
             risk_color = "22b2b2"
             risk_level = "Low/Medium"
-        st.subheader('Your Risk Level')
+        st.markdown("<h3 style='margin-bottom: 0;'>Your Risk Level</h3>", unsafe_allow_html=True)
         st.markdown(f"<span style='font-size: 36px; color: #{risk_color};'>{risk_level.capitalize()}</span>",
                     unsafe_allow_html=True)
         st.session_state.submitted = False
