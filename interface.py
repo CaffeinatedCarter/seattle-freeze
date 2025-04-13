@@ -131,6 +131,7 @@ if st.session_state.submitted:
     # st.dataframe(pt_df_display, hide_index=True, column_config=column_config)
     # st.markdown('#####')
     st.subheader('Your Results')
+    st.markdown(f"Model: {model_toggle}")
 
     if not model_toggle:
         if prediction:
