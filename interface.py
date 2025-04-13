@@ -64,7 +64,7 @@ if not st.session_state.submitted:
         high_blood_pressure_value = True if input_hbp == "Yes" else False
         gender_value = 1 if input_sex == "Male" else 0
 
-        if not model_toggle:
+        if model_toggle == "Learning Model":
             prediction = predict_single_entry(gender=gender_value, age=input_age,
                             smoking_status=smoker_value, hdl=input_hdl,
                             total_cholesterol=input_tot_chol, systolic_bp=input_bp)
@@ -133,7 +133,7 @@ if st.session_state.submitted:
     st.subheader('Your Results')
     st.markdown(f"Model: {model_toggle}")
 
-    if not model_toggle:
+    if model_toggle == "Learning Model":
         if prediction:
             risk_color = 'B22222'
             risk_level = "High"
