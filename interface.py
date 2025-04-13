@@ -1,4 +1,5 @@
 from patient import Patient
+from prediction_model_api_call import predict_single_entry
 import framingham as frs
 
 import streamlit as st
@@ -16,6 +17,7 @@ if 'submitted' not in st.session_state:
 form_placeholder = st.empty() 
 
 if not st.session_state.submitted:
+    mode = st.toggle("Use Learning Model")
     with form_placeholder.form(key="user_form"):
         input_age = st.slider("Age in years", min_value=30, max_value=100, value=65, step=1, format="%d")
         input_sex = st.selectbox("Sex at birth", options=["Male", "Female"])
