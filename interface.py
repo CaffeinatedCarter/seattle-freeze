@@ -130,7 +130,7 @@ if st.session_state.submitted:
             risk_level = "High"
         else:
             risk_color = "22b2b2"
-            risk_level = "Low-Medium"
+            risk_level = "Low/Medium"
         st.markdown('#### Risk Level')
         st.markdown(f"<span style='font-size: 36px; color: #{risk_color};'>{risk_level.capitalize()}</span>",
                     unsafe_allow_html=True)
