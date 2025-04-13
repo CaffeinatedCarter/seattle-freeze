@@ -17,8 +17,9 @@ if 'submitted' not in st.session_state:
 form_placeholder = st.empty() 
 
 if not st.session_state.submitted:
-    mode = st.toggle("Use Learning Model")
+
     with form_placeholder.form(key="user_form"):
+        mode = st.toggle("Use Learning Model")
         input_age = st.slider("Age in years", min_value=30, max_value=100, value=65, step=1, format="%d")
         input_sex = st.selectbox("Sex at birth", options=["Male", "Female"])
         input_smoker = st.radio("Are you a current or former smoker?", options=["No", "Yes"])
