@@ -130,8 +130,8 @@ if st.session_state.submitted:
     # st.subheader("Your Submission")
     # st.dataframe(pt_df_display, hide_index=True, column_config=column_config)
     # st.markdown('#####')
-    st.subheader('Your Results')
-    st.markdown(f"Model: {model_toggle}")
+
+    # st.markdown(f"Model: {model_toggle}")
 
     if model_toggle == "Learning Model":
         if prediction:
@@ -140,11 +140,13 @@ if st.session_state.submitted:
         else:
             risk_color = "22b2b2"
             risk_level = "Low/Medium"
-        st.markdown(f"#### Risk Level <span style='font-size: 36px; color: #{risk_color};'>{risk_level.capitalize()}</span>",
+        st.subheader('Your Risk Level')
+        st.markdown("<span style='font-size: 36px; color: #{risk_color};'>{risk_level.capitalize()}</span>",
                     unsafe_allow_html=True)
         st.session_state.submitted = False
 
     else:
+        st.subheader('Your Results')
         pt_frs = frs.FraminghamRiskScore(patient=pt)
         pt_frs.calc_frs()
         ten_yr_risk, heart_age, risk_level = pt_frs.interpret_score()
