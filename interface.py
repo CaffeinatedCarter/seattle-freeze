@@ -21,8 +21,8 @@ if not st.session_state.submitted:
     with form_placeholder.form(key="user_form"):
 
         option_map = {
-            0: "Learning Model",
-            1: "Framingham Risk Score"
+            "Learning Model" : 0,
+            "Framingham Risk Score" : 1
         }
         model_toggle = st.segmented_control(label="Model Selection",
             label_visibility="collapsed",
