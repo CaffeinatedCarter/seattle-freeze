@@ -19,8 +19,17 @@ form_placeholder = st.empty()
 if not st.session_state.submitted:
 
     with form_placeholder.form(key="user_form"):
-        st.markdown(f'Framingham Risk Factor')
-        model_toggle = st.toggle("Use Learning Model", value=True)
+        c1, c2, c3 = st.columns(2)
+
+        with c1:
+            st.markdown("Framingham Risk Score")
+
+        with c2:
+            model_toggle = st.toggle("Use Learning Model", value=True)
+
+
+
+
         input_age = st.slider("Age in years", min_value=30, max_value=100, value=65, step=1, format="%d")
         input_sex = st.selectbox("Sex at birth", options=["Male", "Female"])
         input_smoker = st.radio("Are you a current or former smoker?", options=["No", "Yes"])
