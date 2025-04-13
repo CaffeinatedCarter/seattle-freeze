@@ -15,13 +15,12 @@ if 'submitted' not in st.session_state:
     st.session_state.submitted = False
 
 form_placeholder = st.empty()
-mode = st.toggle("Learning Model")
 
 if not st.session_state.submitted:
 
     with form_placeholder.form(key="user_form"):
-        st.markdown(f'Framingham Risk Factor {mode}')
-
+        st.markdown(f'Framingham Risk Factor')
+        model_toggle = st.toggle("Use Learning Model", value=True)
         input_age = st.slider("Age in years", min_value=30, max_value=100, value=65, step=1, format="%d")
         input_sex = st.selectbox("Sex at birth", options=["Male", "Female"])
         input_smoker = st.radio("Are you a current or former smoker?", options=["No", "Yes"])
@@ -54,29 +53,35 @@ if not st.session_state.submitted:
             st.error("All fields are required.")
 
         smoker_value = 1 if input_smoker == "Yes" else 0
-        high_blood_pressure_value = 1 if input_hbp == "Yes" else 0
+        high_blood_pressure_value = True if input_hbp == "Yes" else False
         gender_value = 1 if input_sex == "Male" else 0
-        
-        pt = Patient(
-            gender=input_sex,
-            age=input_age,
-            hdl=frs.mgdL_to_mmolL(input_hdl),
-            total_cholesterol=frs.mgdL_to_mmolL(input_tot_chol),
-            systolic_bp=input_bp,
-            hbp_treatment=high_blood_pressure_value,
-            smoker=smoker_value,
-            pt_id = str(uuid.uuid4())
-        )
 
-        pt_df = pt.to_df()
-        internal_columns = {
-            'index', 'id', 'coronary_heart_disease', 'myocardial_infarction', 'heart_failure',
-            'stroke', 'peripheral_artery_disease', 'any_cvd'
-        }
-        pt_df_display = pt_df.drop(columns=internal_columns, errors='ignore')
-        pt_df_display["smoking_status"] = input_smoker
-        pt_df_display["hbp_treatment"] = input_hbp
-        pt_df_display["gender"] = input_sex
+        if model_toggle:
+            predict_single_entry(gender=gender_value, age=input_age,
+                            smoking_status=smoker_value, hdl=input_hdl,
+                            total_cholesterol=input_tot_chol, systolic_bp=input_bp)
+
+        else:
+            pt = Patient(
+                gender=input_sex,
+                age=input_age,
+                hdl=frs.mgdL_to_mmolL(input_hdl),
+                total_cholesterol=frs.mgdL_to_mmolL(input_tot_chol),
+                systolic_bp=input_bp,
+                hbp_treatment=high_blood_pressure_value,
+                smoker=smoker_value,
+                pt_id = str(uuid.uuid4())
+            )
+
+            pt_df = pt.to_df()
+            internal_columns = {
+                'index', 'id', 'coronary_heart_disease', 'myocardial_infarction', 'heart_failure',
+                'stroke', 'peripheral_artery_disease', 'any_cvd'
+            }
+            pt_df_display = pt_df.drop(columns=internal_columns, errors='ignore')
+            pt_df_display["smoking_status"] = input_smoker
+            pt_df_display["hbp_treatment"] = input_hbp
+            pt_df_display["gender"] = input_sex
 
 if st.session_state.submitted:
     
