@@ -25,7 +25,7 @@ if not st.session_state.submitted:
             1: "Framingham Risk Score"
         }
         model_toggle = st.segmented_control(label="Model Selection",
-            label_visibility=False,
+            label_visibility="collapsed",
             options = option_map.keys(),
             selection_mode="single"
         )
