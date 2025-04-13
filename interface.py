@@ -34,7 +34,8 @@ if not st.session_state.submitted:
         }
         model_toggle = st.segmented_control(label="Model Selection",
             options = option_map.keys(),
-            selection_mode="single"
+            selection_mode="single",
+            default="Learning Model"
         )
         submitted = st.form_submit_button("Submit")
 
