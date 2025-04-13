@@ -24,7 +24,8 @@ if not st.session_state.submitted:
             0: "Learning Model",
             1: "Framingham Risk Score"
         }
-        model_toggle = st.segmented_control(
+        model_toggle = st.segmented_control(label="Model Selection",
+            label_visibility=False,
             options = option_map.keys(),
             selection_mode="single"
         )
