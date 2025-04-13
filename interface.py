@@ -14,12 +14,14 @@ st.text("This is an informal estimate and does not constitute a clinical diagnos
 if 'submitted' not in st.session_state:
     st.session_state.submitted = False
 
-form_placeholder = st.empty() 
+form_placeholder = st.empty()
+mode = st.toggle("Learning Model")
 
 if not st.session_state.submitted:
 
     with form_placeholder.form(key="user_form"):
-        mode = st.toggle("Use Learning Model")
+        st.markdown(f'Framingham Risk Factor {mode}')
+
         input_age = st.slider("Age in years", min_value=30, max_value=100, value=65, step=1, format="%d")
         input_sex = st.selectbox("Sex at birth", options=["Male", "Female"])
         input_smoker = st.radio("Are you a current or former smoker?", options=["No", "Yes"])
