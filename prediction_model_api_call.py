@@ -1,9 +1,8 @@
 import urllib.request
 import json
-import streamlit as st
 
 url = 'https://seattlefreeze-fhprediction.eastus2.inference.ml.azure.com/score'
-api_key = st.secrets['MODEL_API_KEY']
+api_key = ''
 
 def predict_single_entry(gender, age, smoking_status, hdl, total_cholesterol, systolic_bp):
     request_data = {

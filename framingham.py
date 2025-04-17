@@ -57,7 +57,7 @@ class FraminghamRiskScore:
         """
         Calculate FRS score for high-density lipoprotein cholesterol (HDL-C), or "good cholesterol," levels.
         Supported unit: mmol/L
-        Note that these point ranges do NOT differ according to gender.
+        Note that these point ranges do NOT differ according to gender. 
         """
         num_points = None
         hdl_ranges = {
@@ -241,7 +241,7 @@ class FraminghamRiskScore:
         if self.ten_yr_risk_percent < 10.0:
             self.risk_level = "Low"
         elif 10.0 <= self.ten_yr_risk_percent < 20.0:
-            self.risk_level = "Medium"
+            self.risk_level = "Intermediate"
         else: 
             self.risk_level = "High"
         
@@ -283,8 +283,8 @@ class FraminghamRiskScore:
         
         return self.score
     
-def mgdL_to_mmolL(cholesterol_val):
-    return cholesterol_val * 0.0259
+    def mgdL_to_mmolL(cholesterol_val):
+        return cholesterol_val * 0.0259
 
 
     

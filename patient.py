@@ -1,6 +1,3 @@
-import random
-import pandas as pd
-
 class Patient:
     def __init__(
             self,
@@ -16,8 +13,6 @@ class Patient:
             diabetes_type_two: bool = False,
             history_heart_disease: bool = False,
             verbose: bool = False
-
-
     ):
         self.pt_id = pt_id
         self.name = name
@@ -59,22 +54,3 @@ class Patient:
             print(f"In HBP treatment: {self.hbp_treatment}")
             print(f"Smoker: {self.smoker}")
             print("")
-
-    def to_df(self):
-        gender = 1 if self.gender == "Male" else 0
-        patient_record = {
-            "id": random.randint(1492, 392194),
-            "gender": gender,
-            "age": self.age,
-            "smoking_status": self.smoker,
-            "hdl": self.hdl,
-            "total_cholesterol": self.total_cholesterol,
-            "systolic_bp": self.systolic_bp,
-            "coronary_heart_disease": 0,
-            "myocardial_infarction": 0,
-            "stroke": 0,
-            "peripheral_artery_disease": 0,
-            "heart_failure": 0,
-            "any_cvd": 0
-    }
-        return pd.DataFrame(patient_record, index=[0])
