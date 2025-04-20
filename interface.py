@@ -200,8 +200,8 @@ if all(key in st.session_state for key in required_keys):
         st.markdown("#### Definitions")
         st.markdown("##### Heart Age")
         st.markdown(
-            "Heart age estimates the age of your heart and blood vessels based on your risk factors.  \n"
-            "If your heart age is higher than your actual age, it indicates increased risk.  \n"
+            "Heart age estimates the age of your heart and blood vessels based on your risk factors."
+            "If your heart age is higher than your actual age, it indicates increased risk."
             "If it's equal to or lower than your actual age, it suggests better heart health."
         )
 
@@ -209,9 +209,9 @@ if all(key in st.session_state for key in required_keys):
 
         st.markdown("##### Risk Percent")
         st.markdown(
-            "Risk percent is the estimated chance of developing heart disease in the next 10 years.  \n"
+            "Risk percent is the estimated chance of developing heart disease in the next 10 years."
             "For example, a 15% risk means 15 out of 100 people with similar health profiles may develop heart disease over the next decade."
-            "This is not a guarantee, but just represents real-world data for individuals with similar risk factors. \n"
+            "This is not a guarantee, but just represents real-world data for individuals with similar risk factors."
             "Higher percentages reflect higher risk and may require lifestyle or medical intervention."
         )
 
