@@ -15,7 +15,6 @@ st.text(
 
 if "submitted" not in st.session_state:
     st.session_state.submitted = False
-
 if "show_frs" not in st.session_state:
     st.session_state.show_frs = False
 
@@ -23,67 +22,76 @@ form_placeholder = st.empty()
 
 with form_placeholder.form(key="user_form"):
     disabled = st.session_state.get("submitted", False)
+
     input_age = st.slider(
-        "Age in years", min_value=30, max_value=100, value=30, step=1
+        "Age in years", min_value=30, max_value=100,
+        value=st.session_state.get("input_age", 30), step=1,
+        disabled=disabled
     )
-    input_sex = st.selectbox("Sex at birth", options=["Male", "Female"])
+    input_sex = st.selectbox(
+        "Sex at birth", options=["Male", "Female"],
+        index=["Male", "Female"].index(st.session_state.get("input_sex", "Male")),
+        disabled=disabled
+    )
     input_smoker = st.radio(
-        "Are you a current or former smoker?", options=["No", "Yes"]
+        "Are you a current or former smoker?", options=["No", "Yes"],
+        index=["No", "Yes"].index(st.session_state.get("input_smoker", "No")),
+        disabled=disabled
     )
     input_hbp = "No"
     input_tot_chol = st.slider(
-        label="Total cholesterol level (mg/dL)",
-        min_value=100,
-        max_value=400,
-        value=250,
+        "Total cholesterol level (mg/dL)", min_value=100, max_value=400,
+        value=st.session_state.get("input_tot_chol", 250),
+        disabled=disabled
     )
     input_hdl = st.slider(
-        label="HDL cholesterol level (mg/dL)", min_value=20, max_value=100, value=40
+        "HDL cholesterol level (mg/dL)", min_value=20, max_value=100,
+        value=st.session_state.get("input_hdl", 40),
+        disabled=disabled
     )
     st.caption("Also known as 'good' cholesterol")
     input_bp = st.slider(
-        label="Systolic blood pressure", min_value=70, max_value=250, value=120
+        "Systolic blood pressure", min_value=70, max_value=250,
+        value=st.session_state.get("input_bp", 120),
+        disabled=disabled
     )
     st.caption("The first and largest number in a blood pressure reading")
+
     if not disabled:
-        submitted = st.form_submit_button("Submit")
-    else:
-        st.form_submit_button("Submit", disabled=True)
+        if st.form_submit_button("Submit"):
+            st.session_state.submitted = True
 
-if submitted:
-    st.session_state.submitted = True
-    # form_placeholder.empty()
-    st.session_state["input_age"] = input_age
-    st.session_state["input_sex"] = input_sex
-    st.session_state["input_smoker"] = input_smoker
-    st.session_state["input_hbp"] = input_hbp
-    st.session_state["input_tot_chol"] = input_tot_chol
-    st.session_state["input_hdl"] = input_hdl
-    st.session_state["input_bp"] = input_bp
+            st.session_state.input_age = input_age
+            st.session_state.input_sex = input_sex
+            st.session_state.input_smoker = input_smoker
+            st.session_state.input_hbp = input_hbp
+            st.session_state.input_tot_chol = input_tot_chol
+            st.session_state.input_hdl = input_hdl
+            st.session_state.input_bp = input_bp
 
-    smoker_value = 1 if input_smoker == "Yes" else 0
-    hbp_value = input_hbp == "Yes"
-    gender_value = 1 if input_sex == "Male" else 0
+            smoker_value = 1 if input_smoker == "Yes" else 0
+            hbp_value = input_hbp == "Yes"
+            gender_value = 1 if input_sex == "Male" else 0
 
-    st.session_state["prediction"] = predict_single_entry(
-        gender=gender_value,
-        age=input_age,
-        smoking_status=smoker_value,
-        hdl=input_hdl,
-        total_cholesterol=input_tot_chol,
-        systolic_bp=input_bp,
-    )
+            st.session_state.prediction = predict_single_entry(
+                gender=gender_value,
+                age=input_age,
+                smoking_status=smoker_value,
+                hdl=input_hdl,
+                total_cholesterol=input_tot_chol,
+                systolic_bp=input_bp,
+            )
 
-    st.session_state["pt"] = Patient(
-        gender=input_sex,
-        age=input_age,
-        hdl=frs.mgdL_to_mmolL(input_hdl),
-        total_cholesterol=frs.mgdL_to_mmolL(input_tot_chol),
-        systolic_bp=input_bp,
-        hbp_treatment=hbp_value,
-        smoker=smoker_value,
-        pt_id=str(uuid.uuid4()),
-    )
+            st.session_state.pt = Patient(
+                gender=input_sex,
+                age=input_age,
+                hdl=frs.mgdL_to_mmolL(input_hdl),
+                total_cholesterol=frs.mgdL_to_mmolL(input_tot_chol),
+                systolic_bp=input_bp,
+                hbp_treatment=hbp_value,
+                smoker=smoker_value,
+                pt_id=str(uuid.uuid4()),
+            )
 
 required_keys = [
     "submitted", "prediction", "pt",
@@ -92,15 +100,15 @@ required_keys = [
 ]
 
 if all(key in st.session_state for key in required_keys):
-    prediction = st.session_state["prediction"]
-    pt = st.session_state["pt"]
-    input_age = st.session_state["input_age"]
-    input_sex = st.session_state["input_sex"]
-    input_smoker = st.session_state["input_smoker"]
-    input_hbp = st.session_state["input_hbp"]
-    input_tot_chol = st.session_state["input_tot_chol"]
-    input_hdl = st.session_state["input_hdl"]
-    input_bp = st.session_state["input_bp"]
+    prediction = st.session_state.prediction
+    pt = st.session_state.pt
+    input_age = st.session_state.input_age
+    input_sex = st.session_state.input_sex
+    input_smoker = st.session_state.input_smoker
+    input_hbp = st.session_state.input_hbp
+    input_tot_chol = st.session_state.input_tot_chol
+    input_hdl = st.session_state.input_hdl
+    input_bp = st.session_state.input_bp
 
     st.header("Your Results")
     st.markdown("#### ML Prediction Model")
@@ -160,9 +168,9 @@ if all(key in st.session_state for key in required_keys):
     if frs_risk_level in risk_explanation:
         st.markdown(risk_explanation[frs_risk_level])
 
-    st.session_state["show_frs"] = st.toggle("Show Framingham Risk Score", value=st.session_state["show_frs"])
+    st.session_state.show_frs = st.toggle("Show Framingham Risk Score", value=st.session_state.show_frs)
 
-    if st.session_state["show_frs"]:
+    if st.session_state.show_frs:
         col1, col2, col3 = st.columns(3, border=True)
 
         with col1:
