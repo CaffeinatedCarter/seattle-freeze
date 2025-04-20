@@ -203,8 +203,13 @@ if st.session_state.submitted:
     }
     if risk_level in risk_explanation:
         st.markdown(f"{risk_explanation[risk_level]}")
-    show_section = st.toggle("Show Framingham Risk Score")
-    if show_section:
+
+    if "show_frs" not in st.session_state:
+        st.session_state["show_frs"] = False
+
+    st.session_state["show_frs"] = st.toggle("Show Framingham Risk Score", value=st.session_state["show_frs"])
+
+    if st.session_state["show_frs"]:
         col1, col2, col3 = st.columns(3, border=True)
 
         # col1.markdown(f'''
@@ -241,4 +246,4 @@ if st.session_state.submitted:
                 unsafe_allow_html=True,
             )
         st.markdown("")
-        # st.session_state.submitted = False
+        st.session_state.submitted = False
