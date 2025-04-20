@@ -151,13 +151,13 @@ if st.session_state.submitted:
         risk_level = "Low to Medium"
 
     st.subheader("Your Results")
-    st.markdown("### ML Prediction Model")
+    st.markdown("#### ML Prediction Model")
     st.markdown(
         f"<span style='font-size: 36px; color: #{risk_color};'>{risk_level.capitalize()}</span>",
         unsafe_allow_html=True,
     )
 
-    st.markdown("### Framingham Risk Score")
+    st.markdown("#### Framingham Risk Score")
     pt_frs = frs.FraminghamRiskScore(patient=pt)
     pt_frs.calc_frs()
     ten_yr_risk, heart_age, risk_level = pt_frs.interpret_score()
