@@ -230,6 +230,7 @@ if st.session_state.submitted:
             unsafe_allow_html=True,
         )
     st.markdown("")
+    st.markdown("About Your Results")
     risk_explanation = {
         "Low":"You have a low chance of developing heart disease in the next 10 years. This means your current health habits are helping. Keep eating well, staying active, and avoiding smoking to maintain your heart health.",
         "Medium":"You have a moderate chance of developing heart disease over the next decade. This suggests that some risk factors may be adding up. Now is a good time to make heart-healthy changes and talk with your doctor about how to reduce your risk",
