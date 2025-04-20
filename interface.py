@@ -21,7 +21,7 @@ if "show_frs" not in st.session_state:
 form_placeholder = st.empty()
 
 with form_placeholder.form(key="user_form"):
-    disabled = st.session_state.submitted
+    disabled = st.session_state.get("submitted", False)
 
     input_age = st.slider(
         "Age in years", min_value=30, max_value=100,
@@ -61,7 +61,6 @@ with form_placeholder.form(key="user_form"):
 
     if submitted_now and not disabled:
         st.session_state.submitted = True
-        disabled = True
 
         st.session_state.input_age = input_age
         st.session_state.input_sex = input_sex
@@ -94,7 +93,6 @@ with form_placeholder.form(key="user_form"):
             smoker=smoker_value,
             pt_id=str(uuid.uuid4()),
         )
-
 
 required_keys = [
     "submitted", "prediction", "pt",
