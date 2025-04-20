@@ -42,8 +42,6 @@ if not st.session_state.submitted:
 
     if submitted:
         st.session_state.submitted = True
-        # Uncomment if you want the form to disappear.
-        # form_placeholder.empty()
         non_ints = [input_sex, input_smoker, input_hbp]
         
         if input_tot_chol < 100 or input_tot_chol > 400:
