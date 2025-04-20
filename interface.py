@@ -95,6 +95,7 @@ with form_placeholder.form(key="user_form"):
             pt_id=str(uuid.uuid4()),
         )
 
+
 required_keys = [
     "submitted", "prediction", "pt",
     "input_age", "input_sex", "input_smoker", "input_hbp",
