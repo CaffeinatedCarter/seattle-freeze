@@ -142,11 +142,6 @@ if st.session_state.submitted:
 
     ## USER-FACING OUTPUT
     st.markdown("###")
-    # st.subheader("Your Submission")
-    # st.dataframe(pt_df_display, hide_index=True, column_config=column_config)
-    # st.markdown('#####')
-
-    # st.markdown(f"Model: {model_toggle}")
 
     if prediction:
         risk_color = "B22222"
