@@ -241,4 +241,4 @@ if st.session_state.submitted:
                 unsafe_allow_html=True,
             )
         st.markdown("")
-    st.session_state.submitted = False
+        # st.session_state.submitted = False
