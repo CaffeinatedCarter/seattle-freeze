@@ -60,41 +60,36 @@ if not st.session_state.submitted:
 
         if input_tot_chol < 100 or input_tot_chol > 400:
             st.error("Please enter a valid total cholesterol level.")
-
-        if input_hdl < 20 or input_hdl > 100:
+        elif input_hdl < 20 or input_hdl > 100:
             st.error("Please enter a valid HDL level.")
-
-        if input_bp < 70 or input_bp > 250:
+        elif input_bp < 70 or input_bp > 250:
             st.error("Please enter a valid blood pressure level.")
-
-        if all(non_ints):
-            pass
-        else:
+        elif not all(non_ints):
             st.error("All fields are required.")
+        else:
+            smoker_value = 1 if input_smoker == "Yes" else 0
+            high_blood_pressure_value = True if input_hbp == "Yes" else False
+            gender_value = 1 if input_sex == "Male" else 0
 
-        smoker_value = 1 if input_smoker == "Yes" else 0
-        high_blood_pressure_value = True if input_hbp == "Yes" else False
-        gender_value = 1 if input_sex == "Male" else 0
+            st.session_state["prediction"] = predict_single_entry(
+                gender=gender_value,
+                age=input_age,
+                smoking_status=smoker_value,
+                hdl=input_hdl,
+                total_cholesterol=input_tot_chol,
+                systolic_bp=input_bp,
+            )
 
-        prediction = predict_single_entry(
-            gender=gender_value,
-            age=input_age,
-            smoking_status=smoker_value,
-            hdl=input_hdl,
-            total_cholesterol=input_tot_chol,
-            systolic_bp=input_bp,
-        )
-
-        pt = Patient(
-            gender=input_sex,
-            age=input_age,
-            hdl=frs.mgdL_to_mmolL(input_hdl),
-            total_cholesterol=frs.mgdL_to_mmolL(input_tot_chol),
-            systolic_bp=input_bp,
-            hbp_treatment=high_blood_pressure_value,
-            smoker=smoker_value,
-            pt_id=str(uuid.uuid4()),
-        )
+            st.session_state["pt"] = Patient(
+                gender=input_sex,
+                age=input_age,
+                hdl=frs.mgdL_to_mmolL(input_hdl),
+                total_cholesterol=frs.mgdL_to_mmolL(input_tot_chol),
+                systolic_bp=input_bp,
+                hbp_treatment=high_blood_pressure_value,
+                smoker=smoker_value,
+                pt_id=str(uuid.uuid4()),
+            )
 
         # pt_df = pt.to_df()
         # internal_columns = {
@@ -112,7 +107,9 @@ if not st.session_state.submitted:
         # pt_df_display["hbp_treatment"] = input_hbp
         # pt_df_display["gender"] = input_sex
 
-if st.session_state.submitted:
+if st.session_state.submitted and "prediction" in st.session_state and "pt" in st.session_state:
+    prediction = st.session_state["prediction"]
+    pt = st.session_state["pt"]
 
     ##  DATA MANIPULATION & FORMATTING
 
