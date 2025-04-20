@@ -288,8 +288,8 @@ class FraminghamRiskScore:
 
         return self.score
 
-    def mgdL_to_mmolL(cholesterol_val):
-        return cholesterol_val * 0.0259
+def mgdL_to_mmolL(cholesterol_val):
+    return cholesterol_val * 0.0259
 
 
 if __name__ == "__main__":
@@ -401,3 +401,4 @@ if __name__ == "__main__":
     assert frs_test.interpret_score() == (100.0, 100, "High")
     print("All checks passed!")
     print("")
+

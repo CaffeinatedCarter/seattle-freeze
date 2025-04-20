@@ -96,21 +96,21 @@ if not st.session_state.submitted:
             pt_id=str(uuid.uuid4()),
         )
 
-        pt_df = pt.to_df()
-        internal_columns = {
-            "index",
-            "id",
-            "coronary_heart_disease",
-            "myocardial_infarction",
-            "heart_failure",
-            "stroke",
-            "peripheral_artery_disease",
-            "any_cvd",
-        }
-        pt_df_display = pt_df.drop(columns=internal_columns, errors="ignore")
-        pt_df_display["smoking_status"] = input_smoker
-        pt_df_display["hbp_treatment"] = input_hbp
-        pt_df_display["gender"] = input_sex
+        # pt_df = pt.to_df()
+        # internal_columns = {
+        #     "index",
+        #     "id",
+        #     "coronary_heart_disease",
+        #     "myocardial_infarction",
+        #     "heart_failure",
+        #     "stroke",
+        #     "peripheral_artery_disease",
+        #     "any_cvd",
+        # }
+        # pt_df_display = pt_df.drop(columns=internal_columns, errors="ignore")
+        # pt_df_display["smoking_status"] = input_smoker
+        # pt_df_display["hbp_treatment"] = input_hbp
+        # pt_df_display["gender"] = input_sex
 
 if st.session_state.submitted:
 
