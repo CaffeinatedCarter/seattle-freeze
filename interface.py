@@ -19,15 +19,15 @@ form_placeholder = st.empty()
 if not st.session_state.submitted:
 
     with form_placeholder.form(key="user_form"):
-        input_age = st.slider("Age in years", min_value=30, max_value=100, value=65, step=1, format="%d")
+        input_age = st.slider("Age in years", min_value=30, max_value=100, value=30, step=1, format="%d")
         input_sex = st.selectbox("Sex at birth", options=["Male", "Female"])
         input_smoker = st.radio("Are you a current or former smoker?", options=["No", "Yes"])
         # input_hbp = st.radio("Are you currently being treated for high blood pressure?", options=["No", "Yes"])
         input_hbp = "No"
         input_tot_chol = st.slider(label="Total cholesterol level (mg/dL)", min_value=100, max_value=400, value=250)
-        input_hdl = st.slider(label="HDL cholesterol level (mg/dL)", min_value=20, max_value=100, value=60)
+        input_hdl = st.slider(label="HDL cholesterol level (mg/dL)", min_value=20, max_value=100, value=40)
         st.caption("Also known as 'good' cholesterol")
-        input_bp = st.slider(label="Systolic blood pressure", min_value=70, max_value=250, value=160)
+        input_bp = st.slider(label="Systolic blood pressure", min_value=70, max_value=250, value=120)
         st.caption("The first and largest number in a blood pressure reading")
         option_map = {
             "Learning Model" : 0,
@@ -64,32 +64,30 @@ if not st.session_state.submitted:
         high_blood_pressure_value = True if input_hbp == "Yes" else False
         gender_value = 1 if input_sex == "Male" else 0
 
-        if model_toggle == "Learning Model":
-            prediction = predict_single_entry(gender=gender_value, age=input_age,
-                            smoking_status=smoker_value, hdl=input_hdl,
-                            total_cholesterol=input_tot_chol, systolic_bp=input_bp)
+        prediction = predict_single_entry(gender=gender_value, age=input_age,
+                        smoking_status=smoker_value, hdl=input_hdl,
+                        total_cholesterol=input_tot_chol, systolic_bp=input_bp)
 
-        else:
-            pt = Patient(
-                gender=input_sex,
-                age=input_age,
-                hdl=frs.mgdL_to_mmolL(input_hdl),
-                total_cholesterol=frs.mgdL_to_mmolL(input_tot_chol),
-                systolic_bp=input_bp,
-                hbp_treatment=high_blood_pressure_value,
-                smoker=smoker_value,
-                pt_id = str(uuid.uuid4())
-            )
+        pt = Patient(
+            gender=input_sex,
+            age=input_age,
+            hdl=frs.mgdL_to_mmolL(input_hdl),
+            total_cholesterol=frs.mgdL_to_mmolL(input_tot_chol),
+            systolic_bp=input_bp,
+            hbp_treatment=high_blood_pressure_value,
+            smoker=smoker_value,
+            pt_id = str(uuid.uuid4())
+        )
 
-            pt_df = pt.to_df()
-            internal_columns = {
-                'index', 'id', 'coronary_heart_disease', 'myocardial_infarction', 'heart_failure',
-                'stroke', 'peripheral_artery_disease', 'any_cvd'
-            }
-            pt_df_display = pt_df.drop(columns=internal_columns, errors='ignore')
-            pt_df_display["smoking_status"] = input_smoker
-            pt_df_display["hbp_treatment"] = input_hbp
-            pt_df_display["gender"] = input_sex
+        pt_df = pt.to_df()
+        internal_columns = {
+            'index', 'id', 'coronary_heart_disease', 'myocardial_infarction', 'heart_failure',
+            'stroke', 'peripheral_artery_disease', 'any_cvd'
+        }
+        pt_df_display = pt_df.drop(columns=internal_columns, errors='ignore')
+        pt_df_display["smoking_status"] = input_smoker
+        pt_df_display["hbp_treatment"] = input_hbp
+        pt_df_display["gender"] = input_sex
 
 if st.session_state.submitted:
     
@@ -133,86 +131,86 @@ if st.session_state.submitted:
 
     # st.markdown(f"Model: {model_toggle}")
 
-    if model_toggle == "Learning Model":
-        if prediction:
-            risk_color = 'B22222'
-            risk_level = "High"
+
+    if prediction:
+        risk_color = 'B22222'
+        risk_level = "High"
+    else:
+        risk_color = "22b2b2"
+        risk_level = "Low to Medium"
+
+    st.subheader('Your Results')
+    st.markdown('### ML Prediction Model')
+    st.markdown(f"<span style='font-size: 36px; color: #{risk_color};'>{risk_level.capitalize()}</span>",
+        unsafe_allow_html=True)
+    
+    st.markdown('### Framingham Risk Score')
+    pt_frs = frs.FraminghamRiskScore(patient=pt)
+    pt_frs.calc_frs()
+    ten_yr_risk, heart_age, risk_level = pt_frs.interpret_score()
+
+    if ten_yr_risk < 10:
+        risk_color = '008000'
+    elif ten_yr_risk < 20:
+        risk_color = 'FF8C00'
+    else:
+        risk_color = 'B22222'
+
+    heart_string = str(heart_age)
+
+    if heart_age == 0:
+        heart_string = "<30"
+        heart_color = '008000'
+    elif heart_age == 100:
+        heart_string = ">80"
+        heart_color = 'B22222'
+    else:
+        heart_string = str(heart_age)
+        if heart_age < input_age:
+            heart_color = '008000'
+        elif input_age <= heart_age <= input_age + 5:
+            heart_color = 'FF8C00'
         else:
-            risk_color = "22b2b2"
-            risk_level = "Low to Medium"
-        st.markdown("<h3 style='margin-bottom: 0;'>Your Risk Level</h3>", unsafe_allow_html=True)
+            heart_color = 'B22222'
+
+
+    if ten_yr_risk == 0.0:
+        riskpercent_string = "<1"
+    elif ten_yr_risk == 100.0:
+        riskpercent_string = ">30"
+    else:
+        riskpercent_string = str(ten_yr_risk)
+
+
+    # # Create the 3-column layout
+    col1, col2, col3 = st.columns(3, border=True)
+
+    # col1.markdown(f'''
+    #     Heart Age:
+    #     :{heart_color}### {heart_age} years
+    # ''')
+    # col2.markdown(f'''
+    #     Ten Year Risk:
+    #     :{risk_color}### {ten_yr_risk}%
+    # ''')
+    # col3.markdown(f'''
+    #     Risk Level:
+    #     :{risk_color}### {risk_level}
+    # ''')
+
+    with col1:
+        st.markdown('#### Heart Age')
+        st.markdown(f"<span style='font-size: 36px; color: #{heart_color};'>{heart_string} years</span>",
+                    unsafe_allow_html=True)
+
+    with col2:
+        st.markdown('#### Ten-Year Risk')
+        st.markdown(f"<span style='font-size: 36px; color: #{risk_color};'>{riskpercent_string}%</span>",
+                    unsafe_allow_html=True)
+
+    with col3:
+        st.markdown('#### Risk Level')
         st.markdown(f"<span style='font-size: 36px; color: #{risk_color};'>{risk_level.capitalize()}</span>",
                     unsafe_allow_html=True)
-        st.session_state.submitted = False
 
-    else:
-        st.subheader('Your Results')
-        pt_frs = frs.FraminghamRiskScore(patient=pt)
-        pt_frs.calc_frs()
-        ten_yr_risk, heart_age, risk_level = pt_frs.interpret_score()
-
-        if ten_yr_risk < 10:
-            risk_color = '008000'
-        elif ten_yr_risk < 20:
-            risk_color = 'FF8C00'
-        else:
-            risk_color = 'B22222'
-
-        heart_string = str(heart_age)
-
-        if heart_age == 0:
-            heart_string = "<30"
-            heart_color = '008000'
-        elif heart_age == 100:
-            heart_string = ">80"
-            heart_color = 'B22222'
-        else:
-            heart_string = str(heart_age)
-            if heart_age < input_age:
-                heart_color = '008000'
-            elif input_age <= heart_age <= input_age + 5:
-                heart_color = 'FF8C00'
-            else:
-                heart_color = 'B22222'
-
-
-        if ten_yr_risk == 0.0:
-            riskpercent_string = "<1"
-        elif ten_yr_risk == 100.0:
-            riskpercent_string = ">30"
-        else:
-            riskpercent_string = str(ten_yr_risk)
-
-
-        # # Create the 3-column layout
-        col1, col2, col3 = st.columns(3, border=True)
-
-        # col1.markdown(f'''
-        #     Heart Age:
-        #     :{heart_color}### {heart_age} years
-        # ''')
-        # col2.markdown(f'''
-        #     Ten Year Risk:
-        #     :{risk_color}### {ten_yr_risk}%
-        # ''')
-        # col3.markdown(f'''
-        #     Risk Level:
-        #     :{risk_color}### {risk_level}
-        # ''')
-
-        with col1:
-            st.markdown('#### Heart Age')
-            st.markdown(f"<span style='font-size: 36px; color: #{heart_color};'>{heart_string} years</span>",
-                        unsafe_allow_html=True)
-
-        with col2:
-            st.markdown('#### Ten-Year Risk')
-            st.markdown(f"<span style='font-size: 36px; color: #{risk_color};'>{riskpercent_string}%</span>",
-                        unsafe_allow_html=True)
-
-        with col3:
-            st.markdown('#### Risk Level')
-            st.markdown(f"<span style='font-size: 36px; color: #{risk_color};'>{risk_level.capitalize()}</span>",
-                        unsafe_allow_html=True)
-
-        st.session_state.submitted = False
+    st.session_state.submitted = False
