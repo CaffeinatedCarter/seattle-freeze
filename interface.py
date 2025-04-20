@@ -57,41 +57,42 @@ with form_placeholder.form(key="user_form"):
     )
     st.caption("The first and largest number in a blood pressure reading")
 
-    if not disabled:
-        if st.form_submit_button("Submit"):
-            st.session_state.submitted = True
+    submitted_now = st.form_submit_button("Submit", disabled=disabled)
 
-            st.session_state.input_age = input_age
-            st.session_state.input_sex = input_sex
-            st.session_state.input_smoker = input_smoker
-            st.session_state.input_hbp = input_hbp
-            st.session_state.input_tot_chol = input_tot_chol
-            st.session_state.input_hdl = input_hdl
-            st.session_state.input_bp = input_bp
+    if submitted_now and not disabled:
+        st.session_state.submitted = True
 
-            smoker_value = 1 if input_smoker == "Yes" else 0
-            hbp_value = input_hbp == "Yes"
-            gender_value = 1 if input_sex == "Male" else 0
+        st.session_state.input_age = input_age
+        st.session_state.input_sex = input_sex
+        st.session_state.input_smoker = input_smoker
+        st.session_state.input_hbp = input_hbp
+        st.session_state.input_tot_chol = input_tot_chol
+        st.session_state.input_hdl = input_hdl
+        st.session_state.input_bp = input_bp
 
-            st.session_state.prediction = predict_single_entry(
-                gender=gender_value,
-                age=input_age,
-                smoking_status=smoker_value,
-                hdl=input_hdl,
-                total_cholesterol=input_tot_chol,
-                systolic_bp=input_bp,
-            )
+        smoker_value = 1 if input_smoker == "Yes" else 0
+        hbp_value = input_hbp == "Yes"
+        gender_value = 1 if input_sex == "Male" else 0
 
-            st.session_state.pt = Patient(
-                gender=input_sex,
-                age=input_age,
-                hdl=frs.mgdL_to_mmolL(input_hdl),
-                total_cholesterol=frs.mgdL_to_mmolL(input_tot_chol),
-                systolic_bp=input_bp,
-                hbp_treatment=hbp_value,
-                smoker=smoker_value,
-                pt_id=str(uuid.uuid4()),
-            )
+        st.session_state.prediction = predict_single_entry(
+            gender=gender_value,
+            age=input_age,
+            smoking_status=smoker_value,
+            hdl=input_hdl,
+            total_cholesterol=input_tot_chol,
+            systolic_bp=input_bp,
+        )
+
+        st.session_state.pt = Patient(
+            gender=input_sex,
+            age=input_age,
+            hdl=frs.mgdL_to_mmolL(input_hdl),
+            total_cholesterol=frs.mgdL_to_mmolL(input_tot_chol),
+            systolic_bp=input_bp,
+            hbp_treatment=hbp_value,
+            smoker=smoker_value,
+            pt_id=str(uuid.uuid4()),
+        )
 
 required_keys = [
     "submitted", "prediction", "pt",
