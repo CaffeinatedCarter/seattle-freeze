@@ -21,66 +21,69 @@ if "show_frs" not in st.session_state:
 
 form_placeholder = st.empty()
 
-if not st.session_state.submitted:
-    with form_placeholder.form(key="user_form"):
-        input_age = st.slider(
-            "Age in years", min_value=30, max_value=100, value=30, step=1
-        )
-        input_sex = st.selectbox("Sex at birth", options=["Male", "Female"])
-        input_smoker = st.radio(
-            "Are you a current or former smoker?", options=["No", "Yes"]
-        )
-        input_hbp = "No"
-        input_tot_chol = st.slider(
-            label="Total cholesterol level (mg/dL)",
-            min_value=100,
-            max_value=400,
-            value=250,
-        )
-        input_hdl = st.slider(
-            label="HDL cholesterol level (mg/dL)", min_value=20, max_value=100, value=40
-        )
-        st.caption("Also known as 'good' cholesterol")
-        input_bp = st.slider(
-            label="Systolic blood pressure", min_value=70, max_value=250, value=120
-        )
-        st.caption("The first and largest number in a blood pressure reading")
+with form_placeholder.form(key="user_form"):
+    disabled = st.session_state.get("submitted", False)
+    input_age = st.slider(
+        "Age in years", min_value=30, max_value=100, value=30, step=1
+    )
+    input_sex = st.selectbox("Sex at birth", options=["Male", "Female"])
+    input_smoker = st.radio(
+        "Are you a current or former smoker?", options=["No", "Yes"]
+    )
+    input_hbp = "No"
+    input_tot_chol = st.slider(
+        label="Total cholesterol level (mg/dL)",
+        min_value=100,
+        max_value=400,
+        value=250,
+    )
+    input_hdl = st.slider(
+        label="HDL cholesterol level (mg/dL)", min_value=20, max_value=100, value=40
+    )
+    st.caption("Also known as 'good' cholesterol")
+    input_bp = st.slider(
+        label="Systolic blood pressure", min_value=70, max_value=250, value=120
+    )
+    st.caption("The first and largest number in a blood pressure reading")
+    if not disabled:
         submitted = st.form_submit_button("Submit")
+    else:
+        st.form_submit_button("Submit", disabled=True)
 
-    if submitted:
-        st.session_state.submitted = True
-        form_placeholder.empty()
-        st.session_state["input_age"] = input_age
-        st.session_state["input_sex"] = input_sex
-        st.session_state["input_smoker"] = input_smoker
-        st.session_state["input_hbp"] = input_hbp
-        st.session_state["input_tot_chol"] = input_tot_chol
-        st.session_state["input_hdl"] = input_hdl
-        st.session_state["input_bp"] = input_bp
+if submitted:
+    st.session_state.submitted = True
+    # form_placeholder.empty()
+    st.session_state["input_age"] = input_age
+    st.session_state["input_sex"] = input_sex
+    st.session_state["input_smoker"] = input_smoker
+    st.session_state["input_hbp"] = input_hbp
+    st.session_state["input_tot_chol"] = input_tot_chol
+    st.session_state["input_hdl"] = input_hdl
+    st.session_state["input_bp"] = input_bp
 
-        smoker_value = 1 if input_smoker == "Yes" else 0
-        hbp_value = input_hbp == "Yes"
-        gender_value = 1 if input_sex == "Male" else 0
+    smoker_value = 1 if input_smoker == "Yes" else 0
+    hbp_value = input_hbp == "Yes"
+    gender_value = 1 if input_sex == "Male" else 0
 
-        st.session_state["prediction"] = predict_single_entry(
-            gender=gender_value,
-            age=input_age,
-            smoking_status=smoker_value,
-            hdl=input_hdl,
-            total_cholesterol=input_tot_chol,
-            systolic_bp=input_bp,
-        )
+    st.session_state["prediction"] = predict_single_entry(
+        gender=gender_value,
+        age=input_age,
+        smoking_status=smoker_value,
+        hdl=input_hdl,
+        total_cholesterol=input_tot_chol,
+        systolic_bp=input_bp,
+    )
 
-        st.session_state["pt"] = Patient(
-            gender=input_sex,
-            age=input_age,
-            hdl=frs.mgdL_to_mmolL(input_hdl),
-            total_cholesterol=frs.mgdL_to_mmolL(input_tot_chol),
-            systolic_bp=input_bp,
-            hbp_treatment=hbp_value,
-            smoker=smoker_value,
-            pt_id=str(uuid.uuid4()),
-        )
+    st.session_state["pt"] = Patient(
+        gender=input_sex,
+        age=input_age,
+        hdl=frs.mgdL_to_mmolL(input_hdl),
+        total_cholesterol=frs.mgdL_to_mmolL(input_tot_chol),
+        systolic_bp=input_bp,
+        hbp_treatment=hbp_value,
+        smoker=smoker_value,
+        pt_id=str(uuid.uuid4()),
+    )
 
 required_keys = [
     "submitted", "prediction", "pt",
