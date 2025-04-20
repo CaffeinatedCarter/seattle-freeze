@@ -49,7 +49,7 @@ if not st.session_state.submitted:
 
     if submitted:
         st.session_state.submitted = True
-
+        form_placeholder.empty()
         st.session_state["input_age"] = input_age
         st.session_state["input_sex"] = input_sex
         st.session_state["input_smoker"] = input_smoker
