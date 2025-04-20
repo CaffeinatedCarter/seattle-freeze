@@ -150,10 +150,10 @@ if st.session_state.submitted:
         risk_color = "22b2b2"
         risk_level = "Low to Medium"
 
-    st.subheader("Your Results")
+    st.header("Your Results")
     st.markdown("#### ML Prediction Model")
     st.markdown(
-        f"<span style='font-size: 36px; color: #{risk_color};'>{risk_level.capitalize()}</span>",
+        f"<span style='font-size: 32px; color: #{risk_color};'>{risk_level.capitalize()}</span>",
         unsafe_allow_html=True,
     )
 
@@ -194,48 +194,51 @@ if st.session_state.submitted:
         riskpercent_string = str(ten_yr_risk)
 
     # # Create the 3-column layout
-    col1, col2, col3 = st.columns(3, border=True)
 
-    # col1.markdown(f'''
-    #     Heart Age:
-    #     :{heart_color}### {heart_age} years
-    # ''')
-    # col2.markdown(f'''
-    #     Ten Year Risk:
-    #     :{risk_color}### {ten_yr_risk}%
-    # ''')
-    # col3.markdown(f'''
-    #     Risk Level:
-    #     :{risk_color}### {risk_level}
-    # ''')
-
-    with col1:
-        st.markdown("#### Heart Age")
-        st.markdown(
-            f"<span style='font-size: 36px; color: #{heart_color};'>{heart_string} years</span>",
-            unsafe_allow_html=True,
-        )
-
-    with col2:
-        st.markdown("#### Ten-Year Risk")
-        st.markdown(
-            f"<span style='font-size: 36px; color: #{risk_color};'>{riskpercent_string}%</span>",
-            unsafe_allow_html=True,
-        )
-
-    with col3:
-        st.markdown("#### Risk Level")
-        st.markdown(
-            f"<span style='font-size: 36px; color: #{risk_color};'>{risk_level.capitalize()}</span>",
-            unsafe_allow_html=True,
-        )
-    st.markdown("")
-    st.markdown("About Your Results")
+    st.markdown("#### About Your Results")
     risk_explanation = {
-        "Low":"You have a low chance of developing heart disease in the next 10 years. This means your current health habits are helping. Keep eating well, staying active, and avoiding smoking to maintain your heart health.",
-        "Medium":"You have a moderate chance of developing heart disease over the next decade. This suggests that some risk factors may be adding up. Now is a good time to make heart-healthy changes and talk with your doctor about how to reduce your risk",
-        "High":"You have a high risk of developing heart disease in the next 10 years. It’s important to take action—this might include lifestyle changes, medications, or other treatments. Talk to your doctor soon to create a plan that supports your heart health."
+        "Low":"You have a **low chance** of developing heart disease in the next 10 years. This means your current health habits are helping. Keep eating well, staying active, and avoiding smoking to maintain your heart health.",
+        "Medium":"You have a **moderate chance** of developing heart disease over the next decade. This suggests that some risk factors may be adding up. Now is a good time to make heart-healthy changes and talk with your doctor about how to reduce your risk",
+        "High":"You have a **high risk** of developing heart disease in the next 10 years. It’s important to take action—this might include lifestyle changes, medications, or other treatments. Talk to your doctor soon to create a plan that supports your heart health."
     }
     if risk_level in risk_explanation:
         st.markdown(f"{risk_explanation[risk_level]}")
+    show_section = st.toggle("Show Framingham Risk Score")
+    if show_section:
+        col1, col2, col3 = st.columns(3, border=True)
+
+        # col1.markdown(f'''
+        #     Heart Age:
+        #     :{heart_color}### {heart_age} years
+        # ''')
+        # col2.markdown(f'''
+        #     Ten Year Risk:
+        #     :{risk_color}### {ten_yr_risk}%
+        # ''')
+        # col3.markdown(f'''
+        #     Risk Level:
+        #     :{risk_color}### {risk_level}
+        # ''')
+
+        with col1:
+            st.markdown("#### Heart Age")
+            st.markdown(
+                f"<span style='font-size: 36px; color: #{heart_color};'>{heart_string} years</span>",
+                unsafe_allow_html=True,
+            )
+
+        with col2:
+            st.markdown("#### Ten-Year Risk")
+            st.markdown(
+                f"<span style='font-size: 36px; color: #{risk_color};'>{riskpercent_string}%</span>",
+                unsafe_allow_html=True,
+            )
+
+        with col3:
+            st.markdown("#### Risk Level")
+            st.markdown(
+                f"<span style='font-size: 36px; color: #{risk_color};'>{risk_level.capitalize()}</span>",
+                unsafe_allow_html=True,
+            )
+        st.markdown("")
     st.session_state.submitted = False
