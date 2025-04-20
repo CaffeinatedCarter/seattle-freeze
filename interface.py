@@ -5,12 +5,13 @@ import framingham as frs
 import streamlit as st
 import uuid
 
-st.title("Framingham Risk Score Calculator")
+st.title("CardiCalc")
 st.subheader(
-    "Input your latest test results and get an estimate of your likelihood of a cardiac event within the next 10 years."
+    "Input your latest test results and get a 10-year estimate of your likelihood of a heart-related event such as a heart attack, stroke, or heart failure."
 )
-st.text(
-    "This is an informal estimate and does not constitute a clinical diagnosis or medical advice. Please consult a physician for more information."
+st.text("")
+st.markdown(
+    "*This is an informal estimate and does not constitute a clinical diagnosis or medical advice. Please consult a physician for more information.*"
 )
 
 if "submitted" not in st.session_state:
