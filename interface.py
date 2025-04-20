@@ -9,7 +9,6 @@ st.title("CardiCalc")
 st.subheader(
     "Input your latest test results and get a 10-year estimate of your likelihood of a heart-related event such as a heart attack, stroke, or heart failure."
 )
-st.text("")
 st.markdown(
     "*This is an informal estimate and does not constitute a clinical diagnosis or medical advice. Please consult a physician for more information.*"
 )
