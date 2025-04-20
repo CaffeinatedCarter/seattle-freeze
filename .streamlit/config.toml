@@ -1,2 +1,6 @@
 [theme]
+base="white"
 primaryColor="#4b70b2"
+
+[client]
+favicon = "img/favicon.png"

@@ -4,8 +4,8 @@ import framingham as frs
 
 import streamlit as st
 import uuid
-
-st.title("CardiCalc")
+st.set_page_config(page_title="CardiCalc")
+st.image("img/logotitle.png", use_column_width=True)
 st.subheader(
     "Input your latest test results and get a 10-year estimate of your likelihood of a heart-related event such as a heart attack, stroke, or heart failure."
 )
