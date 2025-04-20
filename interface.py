@@ -1,11 +1,13 @@
 from patient import Patient
 from prediction_model_api_call import predict_single_entry
 import framingham as frs
-
+from PIL import Image
 import streamlit as st
 import uuid
-st.set_page_config(page_title="CardiCalc")
-st.image("img/logotitle.png", use_column_width=True)
+favicon = Image.open("img/favicon.png")
+st.set_page_config(page_title="CardiCalc",
+                   page_icon=favicon)
+st.image("img/logotitle.png", use_container_width=True)
 st.subheader(
     "Input your latest test results and get a 10-year estimate of your likelihood of a heart-related event such as a heart attack, stroke, or heart failure."
 )
