@@ -21,7 +21,7 @@ if "show_frs" not in st.session_state:
 form_placeholder = st.empty()
 
 with form_placeholder.form(key="user_form"):
-    disabled = st.session_state.get("submitted", False)
+    disabled = st.session_state.submitted
 
     input_age = st.slider(
         "Age in years", min_value=30, max_value=100,
@@ -61,6 +61,7 @@ with form_placeholder.form(key="user_form"):
 
     if submitted_now and not disabled:
         st.session_state.submitted = True
+        disabled = True
 
         st.session_state.input_age = input_age
         st.session_state.input_sex = input_sex
@@ -112,7 +113,7 @@ if all(key in st.session_state for key in required_keys):
     input_bp = st.session_state.input_bp
 
     st.header("Your Results")
-    st.markdown("#### ML Prediction Model")
+    # st.markdown("#### ML Prediction Model")
 
     if prediction:
         risk_color = "B22222"
@@ -126,7 +127,6 @@ if all(key in st.session_state for key in required_keys):
         unsafe_allow_html=True,
     )
 
-    st.markdown("#### Framingham Risk Score")
     pt_frs = frs.FraminghamRiskScore(patient=pt)
     pt_frs.calc_frs()
     ten_yr_risk, heart_age, frs_risk_level = pt_frs.interpret_score()
@@ -168,10 +168,11 @@ if all(key in st.session_state for key in required_keys):
     }
     if frs_risk_level in risk_explanation:
         st.markdown(risk_explanation[frs_risk_level])
-
+    st.markdown("")
     st.session_state.show_frs = st.toggle("Show Framingham Risk Score", value=st.session_state.show_frs)
-
+    st.markdown("")
     if st.session_state.show_frs:
+        st.markdown("#### Framingham Risk Score")
         col1, col2, col3 = st.columns(3, border=True)
 
         with col1:
