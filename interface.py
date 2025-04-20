@@ -30,7 +30,6 @@ if not st.session_state.submitted:
         input_smoker = st.radio(
             "Are you a current or former smoker?", options=["No", "Yes"]
         )
-        # input_hbp = st.radio("Are you currently being treated for high blood pressure?", options=["No", "Yes"])
         input_hbp = "No"
         input_tot_chol = st.slider(
             label="Total cholesterol level (mg/dL)",
