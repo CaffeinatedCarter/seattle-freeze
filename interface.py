@@ -82,7 +82,13 @@ if not st.session_state.submitted:
             pt_id=str(uuid.uuid4()),
         )
 
-if st.session_state.submitted and "prediction" in st.session_state and "pt" in st.session_state:
+required_keys = [
+    "submitted", "prediction", "pt",
+    "input_age", "input_sex", "input_smoker", "input_hbp",
+    "input_tot_chol", "input_hdl", "input_bp"
+]
+
+if all(key in st.session_state for key in required_keys):
     prediction = st.session_state["prediction"]
     pt = st.session_state["pt"]
     input_age = st.session_state["input_age"]
