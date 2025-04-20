@@ -1,28 +1,31 @@
 class Patient:
     def __init__(
-            self,
-            gender: str,
-            age: int,
-            hdl: float,
-            total_cholesterol: float,
-            systolic_bp: int,
-            pt_id: str = None,
-            name: str = None,
-            hbp_treatment: bool = False,
-            smoker: bool = False,
-            diabetes_type_two: bool = False,
-            history_heart_disease: bool = False,
-            verbose: bool = False
+        self,
+        gender: str,
+        age: int,
+        hdl: float,
+        total_cholesterol: float,
+        systolic_bp: int,
+        pt_id: str = None,
+        name: str = None,
+        hbp_treatment: bool = False,
+        smoker: bool = False,
+        diabetes_type_two: bool = False,
+        history_heart_disease: bool = False,
+        verbose: bool = False,
     ):
         self.pt_id = pt_id
         self.name = name
         if gender not in ["Male", "Female"]:
-            raise ValueError(f"Invalid gender provided: {gender} Must be 'Male' or 'Female'.")
-        else: self.gender = gender
+            raise ValueError(
+                f"Invalid gender provided: {gender} Must be 'Male' or 'Female'."
+            )
+        else:
+            self.gender = gender
         if age <= 1 or age > 999:
             raise ValueError("Patient must be at least 30 years old.")
         self.age = age
-        
+
         # Cholesterol measured in (mmol/L)
         # TODO: handle conversion from (mg/dL) with UI selector
         if hdl < 0:

@@ -1,36 +1,46 @@
 import urllib.request
 import json
 
-url = 'https://seattlefreeze-fhprediction.eastus2.inference.ml.azure.com/score'
-api_key = ''
+url = "https://seattlefreeze-fhprediction.eastus2.inference.ml.azure.com/score"
+api_key = ""
 
-def predict_single_entry(gender, age, smoking_status, hdl, total_cholesterol, systolic_bp):
+
+def predict_single_entry(
+    gender, age, smoking_status, hdl, total_cholesterol, systolic_bp
+):
     request_data = {
         "input_data": {
             "columns": [
-                "gender", "age", "smoking_status", "hdl", "total_cholesterol", "systolic_bp"
+                "gender",
+                "age",
+                "smoking_status",
+                "hdl",
+                "total_cholesterol",
+                "systolic_bp",
             ],
             "index": [0],
-            "data": [[gender, age, smoking_status, hdl, total_cholesterol, systolic_bp]]
+            "data": [
+                [gender, age, smoking_status, hdl, total_cholesterol, systolic_bp]
+            ],
         }
     }
-    
+
     body = str.encode(json.dumps(request_data))
-    
+
     headers = {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': ('Bearer ' + api_key)
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "Authorization": ("Bearer " + api_key),
     }
-    headers['azureml-model-deployment'] = 'fhmodel-reducedfeatures-2'
-    
+    headers["azureml-model-deployment"] = "fhmodel-reducedfeatures-2"
+
     # Create and send request
     req = urllib.request.Request(url, body, headers)
     try:
         response = urllib.request.urlopen(req)
         result = response.read()
         prediction = json.loads(result)
-        
+
         if isinstance(prediction, list) and len(prediction) > 0:
             return prediction[0]
         else:
@@ -38,6 +48,7 @@ def predict_single_entry(gender, age, smoking_status, hdl, total_cholesterol, sy
     except urllib.error.HTTPError as error:
         print(f"Error {error.code}: {error.read().decode('utf8', 'ignore')}")
         return None
+
 
 if __name__ == "__main__":
     result = predict_single_entry(1, 45, 1, 50, 220, 140)
