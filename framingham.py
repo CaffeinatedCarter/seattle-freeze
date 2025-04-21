@@ -331,7 +331,7 @@ if __name__ == "__main__":
         total_cholesterol=3.9,
         systolic_bp=118,
         hbp_treatment=False,
-        smoker=False,
+        smoker=True,
         verbose=True,
     )
 
@@ -383,9 +383,9 @@ if __name__ == "__main__":
         age=75,
         hdl=0.9,
         total_cholesterol=6.2,
-        systolic_bp=140,
+        systolic_bp=180,
         hbp_treatment=False,
-        smoker=True,
+        smoker=False,
         verbose=True,
     )
 
